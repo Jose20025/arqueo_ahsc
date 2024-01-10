@@ -7,7 +7,7 @@ class CashCount {
     this.cash50,
     this.cash100,
     this.cash200,
-    this.coin0_5,
+    this.coin05,
     this.coin1,
     this.coin2,
     this.coin5,
@@ -25,7 +25,7 @@ class CashCount {
   final int? cash200;
 
   // Monedas
-  final int? coin0_5;
+  final int? coin05;
   final int? coin1;
   final int? coin2;
   final int? coin5;
@@ -43,7 +43,7 @@ class CashCount {
         cash50: json["cash50"],
         cash100: json["cash100"],
         cash200: json["cash200"],
-        coin0_5: json["coin0_5"],
+        coin05: json["coin05"],
         coin1: json["coin1"],
         coin2: json["coin2"],
         coin5: json["coin5"],
@@ -57,7 +57,7 @@ class CashCount {
         "cash50": cash50,
         "cash100": cash100,
         "cash200": cash200,
-        "coin0_5": coin0_5,
+        "coin05": coin05,
         "coin1": coin1,
         "coin2": coin2,
         "coin5": coin5,
