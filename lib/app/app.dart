@@ -10,8 +10,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Arqueo AHSC',
       debugShowCheckedModeBanner: false,
-      theme: ThemeConfig.getLightTheme(),
-      darkTheme: ThemeConfig.getDarkTheme(),
+      theme: ThemeConfig.getTheme(),
       home: const HomePage(),
     );
   }
