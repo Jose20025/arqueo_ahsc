@@ -1,6 +1,7 @@
 class CashCount {
   // Constructor
   CashCount({
+    required this.totalAmount,
     this.cash10,
     this.cash20,
     this.cash50,
@@ -11,22 +12,10 @@ class CashCount {
     this.coin2,
     this.coin5,
     this.bruteCash,
-  }) {
-    // Calculamos el dinero total
-    totalAmount = 0;
-    totalAmount += (cash10 ?? 0) * 10;
-    totalAmount += (cash20 ?? 0) * 20;
-    totalAmount += (cash50 ?? 0) * 50;
-    totalAmount += (cash100 ?? 0) * 100;
-    totalAmount += (cash200 ?? 0) * 200;
-    totalAmount += (coin0_5 ?? 0) * 0.5;
-    totalAmount += (coin1 ?? 0) * 1;
-    totalAmount += (coin2 ?? 0) * 2;
-    totalAmount += (coin5 ?? 0) * 5;
-  }
+  });
 
   // Dinero total
-  double totalAmount = 0;
+  double totalAmount;
 
   // Billetes
   final int? cash10;
@@ -59,6 +48,7 @@ class CashCount {
         coin2: json["coin2"],
         coin5: json["coin5"],
         bruteCash: json["bruteCash"],
+        totalAmount: json["totalAmount"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,5 +62,6 @@ class CashCount {
         "coin2": coin2,
         "coin5": coin5,
         "bruteCash": bruteCash,
+        "totalAmount": totalAmount,
       };
 }
