@@ -39,8 +39,18 @@ class _NoDayCashCounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('No hay arqueos'),
+    return Container(
+      margin: const EdgeInsets.all(20),
+      child: const Center(
+        child: Text(
+          'No hay arqueos de caja\nAgrega uno para empezar',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
