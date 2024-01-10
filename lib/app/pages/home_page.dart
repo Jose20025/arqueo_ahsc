@@ -9,31 +9,35 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //* AppBar
-      appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Arqueos AHSC'),
-            AHSCLogo(height: 60),
-          ],
+        //* AppBar
+        appBar: AppBar(
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Arqueos AHSC'),
+              AHSCLogo(height: 60),
+            ],
+          ),
         ),
-      ),
 
-      //* Floating Action Button
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => const AddCashCountPage(),
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
+        //* Floating Action Button
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const AddCashCountPage(),
+              ),
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
 
-      //* Body
-      body: const DayCashCounts(),
-    );
+        //* Body
+        body: const Column(
+          children: [
+            DayCashCounts(),
+            SizedBox(height: 20),
+          ],
+        ));
   }
 }
