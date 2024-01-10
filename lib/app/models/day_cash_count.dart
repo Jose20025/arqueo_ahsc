@@ -5,8 +5,8 @@ class DayCashCount {
   DayCashCount({
     required this.id,
     required this.initialCashCount,
-    this.finalCashCount,
     required this.date,
+    this.finalCashCount,
   });
 
   // Propiedades
