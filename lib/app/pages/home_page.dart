@@ -1,3 +1,4 @@
+import 'package:arqueo_ahsc/app/widgets/day_cash_counts_list.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,9 +14,7 @@ class HomePage extends StatelessWidget {
         onPressed: () {},
         child: const Icon(Icons.add),
       ),
-      body: const Center(
-        child: Text('Arqueos AHSC'),
-      ),
+      body: const DayCashCounts(),
     );
   }
 }
