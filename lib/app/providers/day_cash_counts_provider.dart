@@ -15,4 +15,9 @@ class DayCashCountsProvider extends ChangeNotifier {
     _dayCashCounts.remove(dayCashCount);
     notifyListeners();
   }
+
+  void deleteDayCashCount(String id) {
+    _dayCashCounts.removeWhere((dayCashCount) => dayCashCount.id == id);
+    notifyListeners();
+  }
 }
