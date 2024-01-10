@@ -10,19 +10,16 @@ class DayCashCounts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<DayCashCount> dayCashCountList =
-        context.read<DayCashCountsProvider>().dayCashCounts;
+        context.watch<DayCashCountsProvider>().dayCashCounts;
 
     return dayCashCountList.isEmpty
         ? const _NoDayCashCounts()
-        : DayCashCountsList(dayCashCountList: dayCashCountList);
+        : DayCashCountsList(dayCashCountList);
   }
 }
 
 class DayCashCountsList extends StatelessWidget {
-  const DayCashCountsList({
-    super.key,
-    required this.dayCashCountList,
-  });
+  const DayCashCountsList(this.dayCashCountList, {super.key});
 
   final List<DayCashCount> dayCashCountList;
 
