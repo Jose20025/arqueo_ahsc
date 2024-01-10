@@ -1,3 +1,5 @@
+import 'package:arqueo_ahsc/app/config/theme.dart';
+import 'package:arqueo_ahsc/app/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -5,14 +7,11 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Arqueo AHSC',
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text('Arqueo AHSC'),
-        ),
-      ),
+      theme: ThemeConfig.getTheme(),
+      home: const HomePage(),
     );
   }
 }
