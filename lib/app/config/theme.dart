@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeConfig {
-  static const primaryColor = Color(0xFFF5DF99);
-  static const secondaryColor = Color(0xFF5FD068);
+  static const primaryColor = Color(0xFF5FD068);
+  static const secondaryColor = Color(0xFF4B8673);
   static const backgroundColor = Color(0xFFF6FBF4);
 
   static ThemeData getTheme() => ThemeData(
@@ -19,6 +19,12 @@ class ThemeConfig {
           backgroundColor: backgroundColor,
           elevation: 0,
           iconTheme: IconThemeData(color: Colors.black),
+        ),
+
+        // floatingActionButton Theme
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: secondaryColor,
+          foregroundColor: Colors.white,
         ),
       );
 }
