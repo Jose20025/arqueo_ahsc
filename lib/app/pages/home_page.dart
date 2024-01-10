@@ -9,6 +9,10 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Arqueos AHSC'),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
       body: const Center(
         child: Text('Arqueos AHSC'),
       ),
