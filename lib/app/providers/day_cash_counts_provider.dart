@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class DayCashCountsProvider extends ChangeNotifier {
   final List<DayCashCount> _dayCashCounts = [];
 
-  List<DayCashCount> get dayCashCounts => _dayCashCounts;
+  List<DayCashCount> get dayCashCounts => _dayCashCounts.reversed.toList();
 
   void addDayCashCount(DayCashCount dayCashCount) {
     _dayCashCounts.add(dayCashCount);
