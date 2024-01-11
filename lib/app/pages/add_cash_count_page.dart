@@ -13,7 +13,6 @@ class AddCashCountPage extends StatefulWidget {
 
   @override
   State<AddCashCountPage> createState() {
-    print('Me redibujo');
     return _AddCashCountPageState();
   }
 }
@@ -156,6 +155,7 @@ class _AddCashCountPageState extends State<AddCashCountPage> {
       bruteCash: amountsMap['bruteCash'] ?? 0,
     );
 
+    // Creamos el nuevo dayCashCount
     final newDayCashCount = DayCashCount(
       id: const Uuid().v4(),
       initialCashCount: initialCashCount,
@@ -164,6 +164,12 @@ class _AddCashCountPageState extends State<AddCashCountPage> {
 
     dayCashCountsProvider.addDayCashCount(newDayCashCount);
     Navigator.of(context).pop();
+  }
+
+  void deleteCash(String id) {
+    setState(() {
+      cashList.removeWhere((cash) => cash.id == id);
+    });
   }
 
   @override
@@ -189,7 +195,10 @@ class _AddCashCountPageState extends State<AddCashCountPage> {
         margin: const EdgeInsets.all(10),
         child: Column(
           children: [
-            CashList(cashList),
+            CashList(
+              cashList,
+              onDelete: deleteCash,
+            ),
             const SizedBox(height: 10),
             _BottomMenu(
               onNewCashAdded: addNewCash,
