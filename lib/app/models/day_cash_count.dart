@@ -14,9 +14,12 @@ class DayCashCount {
   CashCount initialCashCount;
   CashCount? finalCashCount;
   final DateTime date;
+  bool isClosed = false;
 
   void setFinalCashCount(CashCount finalCashCount) {
     this.finalCashCount = finalCashCount;
+
+    isClosed = true;
   }
 
   void setInitialCashCount(CashCount initialCashCount) {
