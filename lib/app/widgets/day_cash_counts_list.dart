@@ -9,7 +9,7 @@ class DayCashCounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DayCashCount> dayCashCountList =
+    final dayCashCountList =
         context.watch<DayCashCountsProvider>().dayCashCounts;
 
     return dayCashCountList.isEmpty
@@ -26,11 +26,11 @@ class DayCashCountsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: ListView.separated(
-      itemBuilder: (_, index) => DayCashCountCard(dayCashCountList[index]),
-      separatorBuilder: (_, __) => const SizedBox(height: 20),
-      itemCount: dayCashCountList.length,
-    ));
+      child: ListView.builder(
+        itemBuilder: (_, index) => DayCashCountCard(dayCashCountList[index]),
+        itemCount: dayCashCountList.length,
+      ),
+    );
   }
 }
 
@@ -39,16 +39,18 @@ class _NoDayCashCounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(20),
-      child: const Center(
-        child: Text(
-          'No hay arqueos de caja\nAgrega uno para empezar',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.all(20),
+        child: const Center(
+          child: Text(
+            'No hay arqueos de caja\nAgrega uno para empezar',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
         ),
       ),
     );
