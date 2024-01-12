@@ -48,7 +48,7 @@ class DayCashCountCard extends StatelessWidget {
                     children: [
                       Text(
                         NumberFormat.currency()
-                            .format(dayCashCount.initialCashCount.totalAmount),
+                            .format(dayCashCount.initialAmount),
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
