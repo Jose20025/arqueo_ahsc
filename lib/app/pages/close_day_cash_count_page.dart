@@ -1,7 +1,6 @@
 import 'package:arqueo_ahsc/app/helpers/build_error_snack_bar.dart';
 import 'package:arqueo_ahsc/app/models/cash.dart';
 import 'package:arqueo_ahsc/app/models/cash_count.dart';
-import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/cash_list.dart';
 import 'package:flutter/material.dart';
@@ -141,7 +140,7 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
       }
     }
 
-    final CashCount initialCashCount = CashCount(
+    final CashCount closedCashCount = CashCount(
       totalAmount: total,
       cash200: amountsMap['cash200'] ?? 0,
       cash100: amountsMap['cash100'] ?? 0,
@@ -155,14 +154,9 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
       bruteCash: amountsMap['bruteCash'] ?? 0,
     );
 
-    // Creamos el nuevo dayCashCount
-    final newDayCashCount = DayCashCount(
-      id: const Uuid().v4(),
-      initialCashCount: initialCashCount,
-      date: DateTime.now(),
-    );
+    dayCashCountsProvider.closeDayCashCount(
+        dayCashCountsProvider.dayCashCounts.first.id, closedCashCount);
 
-    dayCashCountsProvider.addDayCashCount(newDayCashCount);
     Navigator.of(context).pop();
   }
 
