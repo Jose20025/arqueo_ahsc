@@ -29,7 +29,8 @@ class HomePage extends StatelessWidget {
         //* Floating Action Button
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (!dayCashCountsProvider.dayCashCounts.first.isClosed) {
+            if (dayCashCountsProvider.dayCashCounts.isNotEmpty &&
+                !dayCashCountsProvider.dayCashCounts.first.isClosed) {
               showErrorSnackBar(context,
                   title:
                       'Debes cerrar el arqueo actual antes de agregar uno nuevo');
