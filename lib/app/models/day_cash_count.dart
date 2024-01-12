@@ -4,14 +4,14 @@ class DayCashCount {
   // Constructor
   DayCashCount({
     required this.id,
-    required this.initialCashCount,
+    required this.initialAmount,
     required this.date,
     this.finalCashCount,
   });
 
   // Propiedades
   final String id;
-  CashCount initialCashCount;
+  double initialAmount;
   CashCount? finalCashCount;
   final DateTime date;
   bool isClosed = false;
@@ -22,14 +22,14 @@ class DayCashCount {
     isClosed = true;
   }
 
-  void setInitialCashCount(CashCount initialCashCount) {
-    this.initialCashCount = initialCashCount;
+  void setInitialCashCount(double initialAmount) {
+    this.initialAmount = initialAmount;
   }
 
   factory DayCashCount.fromJson(Map<String, dynamic> json) {
     return DayCashCount(
       id: json['id'],
-      initialCashCount: CashCount.fromJson(json['initialCashCount']),
+      initialAmount: double.parse(json['initialAmount']),
       finalCashCount: json['finalCashCount'] != null
           ? CashCount.fromJson(json['finalCashCount'])
           : null,
@@ -40,7 +40,7 @@ class DayCashCount {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'initialCashCount': initialCashCount.toJson(),
+      'initialCashCount': initialAmount.toString(),
       'finalCashCount': finalCashCount?.toJson(),
       'date': date.toIso8601String(),
     };
