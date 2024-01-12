@@ -59,8 +59,63 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class _InitialCashCountAmountModal extends StatelessWidget {
+class _InitialCashCountAmountModal extends StatefulWidget {
   const _InitialCashCountAmountModal();
+
+  @override
+  State<_InitialCashCountAmountModal> createState() =>
+      _InitialCashCountAmountModalState();
+}
+
+class _InitialCashCountAmountModalState
+    extends State<_InitialCashCountAmountModal> {
+  final TextEditingController _initialAmountController =
+      TextEditingController();
+
+  void createDayCashCount(BuildContext context) {
+    if (_initialAmountController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Debes ingresar un monto inicial'),
+          actions: [
+            FilledButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Aceptar'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (double.tryParse(_initialAmountController.text) == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Debes ingresar un monto válido'),
+          actions: [
+            FilledButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Aceptar'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    // Leer el provider
+    final DayCashCountsProvider dayCashCountsProvider =
+        context.read<DayCashCountsProvider>();
+
+    dayCashCountsProvider
+        .createDayCashCount(double.parse(_initialAmountController.text));
+
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +132,10 @@ class _InitialCashCountAmountModal extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            const TextField(
+            TextField(
+              controller: _initialAmountController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 labelText: 'Monto inicial',
@@ -101,7 +157,7 @@ class _InitialCashCountAmountModal extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: FilledButton(
-                    onPressed: () {},
+                    onPressed: () => createDayCashCount(context),
                     child: const Text('Aceptar'),
                   ),
                 ),
