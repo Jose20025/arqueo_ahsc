@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-class AddCashCountPage extends StatefulWidget {
-  const AddCashCountPage({super.key});
+class CloseDayCashCountPage extends StatefulWidget {
+  const CloseDayCashCountPage({super.key});
 
   @override
-  State<AddCashCountPage> createState() {
-    return _AddCashCountPageState();
+  State<CloseDayCashCountPage> createState() {
+    return _CloseDayCashCountPageState();
   }
 }
 
-class _AddCashCountPageState extends State<AddCashCountPage> {
+class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
   List<Cash> cashList = [];
   late final DayCashCountsProvider dayCashCountsProvider;
 

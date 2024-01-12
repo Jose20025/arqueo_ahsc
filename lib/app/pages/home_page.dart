@@ -1,5 +1,5 @@
 import 'package:arqueo_ahsc/app/helpers/build_error_snack_bar.dart';
-import 'package:arqueo_ahsc/app/pages/add_cash_count_page.dart';
+import 'package:arqueo_ahsc/app/pages/close_day_cash_count_page.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/ahsc_logo.dart';
 import 'package:arqueo_ahsc/app/widgets/day_cash_counts_list.dart';
@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
 
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => const AddCashCountPage(),
+                builder: (_) => const CloseDayCashCountPage(),
               ),
             );
           },
