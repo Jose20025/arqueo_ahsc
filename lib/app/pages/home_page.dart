@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       //* AppBar
       appBar: AppBar(
+        toolbarHeight: 70,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

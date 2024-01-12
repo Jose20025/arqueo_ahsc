@@ -72,7 +72,7 @@ class DayCashCountCard extends StatelessWidget {
                     subtitle: Text(
                       DateFormat.yMEd().format(dayCashCount.date),
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                   const SizedBox(height: 5),
