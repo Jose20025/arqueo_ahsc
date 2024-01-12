@@ -1,3 +1,4 @@
+import 'package:arqueo_ahsc/app/models/cash_count.dart';
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -15,6 +16,15 @@ class DayCashCountsProvider extends ChangeNotifier {
     );
 
     _dayCashCounts.add(newDayCashCount);
+
+    notifyListeners();
+  }
+
+  void closeDayCashCount(String id, CashCount closedCashCount) {
+    final DayCashCount dayCashCount =
+        _dayCashCounts.firstWhere((dayCashCount) => dayCashCount.id == id);
+
+    dayCashCount.close(closedCashCount);
 
     notifyListeners();
   }
