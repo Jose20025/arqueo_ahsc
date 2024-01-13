@@ -40,7 +40,7 @@ class DayCashCount {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'initialCashCount': initialAmount.toString(),
+      'initialAmount': initialAmount.toString(),
       'finalCashCount': finalCashCount?.toJson(),
       'date': date.toIso8601String(),
     };
