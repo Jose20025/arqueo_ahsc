@@ -1,5 +1,7 @@
 import 'package:arqueo_ahsc/app/helpers/build_error_snack_bar.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
+import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
+import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/public/ahsc_logo.dart';
 import 'package:arqueo_ahsc/app/widgets/buttons/cancel_button.dart';
 import 'package:arqueo_ahsc/app/widgets/drawer/custom_drawer.dart';
@@ -7,8 +9,39 @@ import 'package:arqueo_ahsc/app/widgets/dayCashCounts/day_cash_counts_list.dart'
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // Cargamos los arqueos
+    context.read<DayCashCountsProvider>().loadDayCashCounts();
+
+    // Cargamos los ingresos
+    context.read<IncomesProvider>().loadIncomes();
+
+    // Cargamos los gastos
+    context.read<ExpensesProvider>().loadExpenses();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // Guardamos los arqueos
+    context.read<DayCashCountsProvider>().saveDayCashCounts();
+
+    // Guardamos los ingresos
+    context.read<IncomesProvider>().saveIncomes();
+
+    // Guardamos los gastos
+    context.read<ExpensesProvider>().saveExpenses();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
