@@ -18,7 +18,12 @@ class App extends StatelessWidget {
         title: 'Arqueo AHSC',
         debugShowCheckedModeBanner: false,
         theme: ThemeConfig.getTheme(),
-        home: const HomePage(),
+        initialRoute: '/',
+        routes: {
+          '/': (_) => const HomePage(),
+          // TODO: Hacer la ruta de ingresos
+          // TODO: Hacer la ruta de gastos
+        },
       ),
     );
   }

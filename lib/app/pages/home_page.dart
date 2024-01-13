@@ -1,6 +1,7 @@
 import 'package:arqueo_ahsc/app/helpers/build_error_snack_bar.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/ahsc_logo.dart';
+import 'package:arqueo_ahsc/app/widgets/custom_drawer.dart';
 import 'package:arqueo_ahsc/app/widgets/day_cash_counts_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,8 @@ class HomePage extends StatelessWidget {
         context.read<DayCashCountsProvider>();
 
     return Scaffold(
+      drawer: const CustomDrawer(page: Active.home),
+
       //* AppBar
       appBar: AppBar(
         toolbarHeight: 70,
