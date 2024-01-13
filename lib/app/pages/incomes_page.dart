@@ -1,7 +1,7 @@
 import 'package:arqueo_ahsc/app/models/income.dart';
 import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/drawer/custom_drawer.dart';
-import 'package:arqueo_ahsc/app/widgets/income/custom_income_tile.dart';
+import 'package:arqueo_ahsc/app/widgets/income/income_card_tile.dart';
 import 'package:arqueo_ahsc/app/widgets/income/add_income_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +54,7 @@ class _IncomesList extends StatelessWidget {
         itemBuilder: (context, index) {
           final Income income = incomes[index];
 
-          return CustomIncomeTile(income);
+          return IncomeCardTile(income);
         },
       ),
     );

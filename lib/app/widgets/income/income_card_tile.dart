@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CustomIncomeTile extends StatelessWidget {
-  const CustomIncomeTile(this.income, {super.key});
+class IncomeCardTile extends StatelessWidget {
+  const IncomeCardTile(this.income, {super.key});
 
   final Income income;
 
@@ -15,7 +15,9 @@ class CustomIncomeTile extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(color: Colors.grey, width: 1),
       ),
+      surfaceTintColor: Colors.blue,
       child: ListTile(
         title: Text(
           NumberFormat.currency().format(income.amount),
