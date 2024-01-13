@@ -19,64 +19,77 @@ class CustomDrawer extends StatelessWidget {
             const DrawerHeader(
               child: AHSCLogo(height: 100),
             ),
-            TextButton(
+            _CustomDrawerNavButton(
+              title: 'Inicio',
+              icon: Icons.home,
+              activePage: page,
+              pageToCompare: Active.home,
               onPressed: () {
                 if (page == Active.home) return;
 
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacementNamed(context, '/');
               },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  page == Active.home
-                      ? ThemeConfig.secondaryColor.withOpacity(0.3)
-                      : Colors.transparent,
-                ),
-              ),
-              child: const ListTile(
-                leading: Icon(Icons.home),
-                title: Text('Inicio'),
-              ),
             ),
             const SizedBox(height: 5),
-            TextButton(
+            _CustomDrawerNavButton(
+              title: 'Ingresos',
+              icon: Icons.wallet,
+              activePage: page,
               onPressed: () {
                 if (page == Active.incomes) return;
 
                 Navigator.pushReplacementNamed(context, '/incomes');
               },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  page == Active.incomes
-                      ? ThemeConfig.secondaryColor.withOpacity(0.3)
-                      : Colors.transparent,
-                ),
-              ),
-              child: const ListTile(
-                leading: Icon(Icons.account_balance_wallet_outlined),
-                title: Text('Ingresos'),
-              ),
+              pageToCompare: Active.incomes,
             ),
             const SizedBox(height: 5),
-            TextButton(
+            _CustomDrawerNavButton(
+              title: 'Gastos',
+              icon: Icons.account_balance_wallet_outlined,
+              activePage: page,
+              pageToCompare: Active.expenses,
               onPressed: () {
                 if (page == Active.expenses) return;
 
                 Navigator.pushReplacementNamed(context, '/expenses');
               },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  page == Active.expenses
-                      ? ThemeConfig.secondaryColor.withOpacity(0.3)
-                      : Colors.transparent,
-                ),
-              ),
-              child: const ListTile(
-                leading: Icon(Icons.account_balance_wallet_rounded),
-                title: Text('Gastos'),
-              ),
-            ),
+            )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _CustomDrawerNavButton extends StatelessWidget {
+  const _CustomDrawerNavButton({
+    required this.title,
+    required this.icon,
+    required this.activePage,
+    required this.pageToCompare,
+    required this.onPressed,
+  });
+
+  final Active activePage;
+  final Active pageToCompare;
+  final void Function() onPressed;
+  final String title;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(
+          activePage == pageToCompare
+              ? ThemeConfig.secondaryColor.withOpacity(0.3)
+              : Colors.transparent,
+        ),
+      ),
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(title),
       ),
     );
   }
