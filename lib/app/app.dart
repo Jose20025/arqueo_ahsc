@@ -21,6 +21,8 @@ class App extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (_) => const HomePage(),
+          // TODO: Hacer la ruta de ingresos
+          // TODO: Hacer la ruta de gastos
         },
       ),
     );
