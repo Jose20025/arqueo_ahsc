@@ -34,6 +34,7 @@ class IncomesPage extends StatelessWidget {
             builder: (context) => const AddIncomeModal(),
           );
         },
+        backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
     );
@@ -49,14 +50,22 @@ class _IncomesList extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ListView.builder(
-        itemCount: incomes.length,
-        itemBuilder: (context, index) {
-          final Income income = incomes[index];
+      child: incomes.isEmpty
+          ? const Center(
+              child: Text(
+                'No hay ingresos todavía\nTrata de agregar uno',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            )
+          : ListView.builder(
+              itemCount: incomes.length,
+              itemBuilder: (context, index) {
+                final Income income = incomes[index];
 
-          return IncomeCardTile(income);
-        },
-      ),
+                return IncomeCardTile(income);
+              },
+            ),
     );
   }
 }

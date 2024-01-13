@@ -33,6 +33,7 @@ class ExpensesPage extends StatelessWidget {
             builder: (context) => const AddExpenseModal(),
           );
         },
+        backgroundColor: Colors.red,
         child: const Icon(Icons.add),
       ),
     );
@@ -48,14 +49,22 @@ class _ExpensesList extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ListView.builder(
-        itemCount: expenses.length,
-        itemBuilder: (context, index) {
-          final expense = expenses[index];
+      child: expenses.isEmpty
+          ? const Center(
+              child: Text(
+                'No hay gastos todavía\nTrata de agregar uno',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            )
+          : ListView.builder(
+              itemCount: expenses.length,
+              itemBuilder: (context, index) {
+                final expense = expenses[index];
 
-          return ExpenseCardTile(expense);
-        },
-      ),
+                return ExpenseCardTile(expense);
+              },
+            ),
     );
   }
 }

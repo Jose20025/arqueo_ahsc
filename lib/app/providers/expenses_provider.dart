@@ -2,23 +2,7 @@ import 'package:arqueo_ahsc/app/models/expense.dart';
 import 'package:flutter/material.dart';
 
 class ExpensesProvider extends ChangeNotifier {
-  final List<Expense> _expenses = [
-    Expense(
-      id: '1',
-      description: 'Gasto 1',
-      amount: 100,
-    ),
-    Expense(
-      id: '2',
-      description: 'Gasto 2',
-      amount: 200,
-    ),
-    Expense(
-      id: '3',
-      description: 'Gasto 3',
-      amount: 300,
-    ),
-  ];
+  final List<Expense> _expenses = [];
 
   List<Expense> get expenses => _expenses;
 
