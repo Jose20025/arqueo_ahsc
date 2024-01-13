@@ -1,8 +1,9 @@
 import 'package:arqueo_ahsc/app/helpers/build_error_snack_bar.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
-import 'package:arqueo_ahsc/app/widgets/ahsc_logo.dart';
-import 'package:arqueo_ahsc/app/widgets/custom_drawer.dart';
-import 'package:arqueo_ahsc/app/widgets/day_cash_counts_list.dart';
+import 'package:arqueo_ahsc/app/widgets/public/ahsc_logo.dart';
+import 'package:arqueo_ahsc/app/widgets/buttons/cancel_button.dart';
+import 'package:arqueo_ahsc/app/widgets/drawer/custom_drawer.dart';
+import 'package:arqueo_ahsc/app/widgets/dayCashCounts/day_cash_counts_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,7 @@ class HomePage extends StatelessWidget {
         context.read<DayCashCountsProvider>();
 
     return Scaffold(
-      drawer: const CustomDrawer(page: Active.home),
+      drawer: const CustomDrawer(page: ActivePage.home),
 
       //* AppBar
       appBar: AppBar(
@@ -148,16 +149,7 @@ class _InitialCashCountAmountModalState
             const SizedBox(height: 20),
             Row(
               children: [
-                Expanded(
-                  child: FilledButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.red)),
-                    child: const Text('Cancelar'),
-                  ),
-                ),
+                const CancelButton(),
                 const SizedBox(width: 10),
                 Expanded(
                   child: FilledButton(

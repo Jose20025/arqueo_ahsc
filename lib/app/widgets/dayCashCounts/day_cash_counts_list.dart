@@ -1,6 +1,6 @@
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
-import 'package:arqueo_ahsc/app/widgets/day_cash_count_card.dart';
+import 'package:arqueo_ahsc/app/widgets/dayCashCounts/day_cash_count_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

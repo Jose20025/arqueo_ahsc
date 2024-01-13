@@ -2,7 +2,7 @@ import 'package:arqueo_ahsc/app/helpers/build_error_snack_bar.dart';
 import 'package:arqueo_ahsc/app/models/cash.dart';
 import 'package:arqueo_ahsc/app/models/cash_count.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
-import 'package:arqueo_ahsc/app/widgets/cash_list.dart';
+import 'package:arqueo_ahsc/app/widgets/cash/cash_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
