@@ -6,8 +6,8 @@ class Income {
   });
 
   final String id;
-  final double amount;
-  final String? description;
+  double amount;
+  String? description;
 
   factory Income.fromJson(Map<String, dynamic> json) => Income(
         id: json['id'],
