@@ -107,7 +107,6 @@ class __EditIncomeFormState extends State<_EditIncomeForm> {
 
 class _EditDescriptionField extends StatelessWidget {
   const _EditDescriptionField({
-    super.key,
     required this.descriptionController,
   });
 
@@ -127,7 +126,6 @@ class _EditDescriptionField extends StatelessWidget {
 
 class _EditAmountField extends StatelessWidget {
   const _EditAmountField({
-    super.key,
     required this.amountController,
   });
 
