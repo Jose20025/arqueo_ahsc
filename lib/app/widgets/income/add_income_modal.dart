@@ -6,6 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+void showAddIncomeModal(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isDismissible: true,
+    isScrollControlled: true,
+    builder: (context) => const AddIncomeModal(),
+  );
+}
+
 class AddIncomeModal extends StatelessWidget {
   const AddIncomeModal({super.key});
 

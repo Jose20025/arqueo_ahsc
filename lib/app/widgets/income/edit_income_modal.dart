@@ -5,6 +5,15 @@ import 'package:arqueo_ahsc/app/widgets/buttons/cancel_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+void showEditIncomeModal(BuildContext context, Income income) {
+  showModalBottomSheet(
+    context: context,
+    isDismissible: true,
+    isScrollControlled: true,
+    builder: (context) => EditIncomeModal(income: income),
+  );
+}
+
 class EditIncomeModal extends StatelessWidget {
   const EditIncomeModal({required this.income, super.key});
 

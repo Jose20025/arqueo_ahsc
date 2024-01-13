@@ -26,14 +26,7 @@ class IncomesPage extends StatelessWidget {
 
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            isDismissible: true,
-            builder: (context) => const AddIncomeModal(),
-          );
-        },
+        onPressed: () => showAddIncomeModal(context),
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),

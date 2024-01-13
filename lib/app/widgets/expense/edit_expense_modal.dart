@@ -4,19 +4,20 @@ import 'package:arqueo_ahsc/app/widgets/buttons/accept_button.dart';
 import 'package:arqueo_ahsc/app/widgets/buttons/cancel_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
-void showAddExpenseModal(BuildContext context) {
+void showEditExpenseModal(BuildContext context, Expense expense) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     isDismissible: true,
-    builder: (context) => const AddExpenseModal(),
+    builder: (context) => EditExpenseModal(expense),
   );
 }
 
-class AddExpenseModal extends StatelessWidget {
-  const AddExpenseModal({super.key});
+class EditExpenseModal extends StatelessWidget {
+  const EditExpenseModal(this.expense, {super.key});
+
+  final Expense expense;
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +27,19 @@ class AddExpenseModal extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.all(20),
-        child: const Column(
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Agregar gasto',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            const Text(
+              'Editar gasto',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            SizedBox(height: 10),
-            _AddExpenseForm(),
+            const SizedBox(height: 10),
+            _EditExpenseForm(expense),
           ],
         ),
       ),
@@ -43,17 +47,29 @@ class AddExpenseModal extends StatelessWidget {
   }
 }
 
-class _AddExpenseForm extends StatefulWidget {
-  const _AddExpenseForm();
+class _EditExpenseForm extends StatefulWidget {
+  const _EditExpenseForm(this.expense);
+
+  final Expense expense;
 
   @override
-  State<_AddExpenseForm> createState() => __AddExpenseFormState();
+  State<_EditExpenseForm> createState() => __EditExpenseFormState();
 }
 
-class __AddExpenseFormState extends State<_AddExpenseForm> {
+class __EditExpenseFormState extends State<_EditExpenseForm> {
   final formKey = GlobalKey<FormState>();
-  final descriptionController = TextEditingController();
-  final amountController = TextEditingController();
+  late final TextEditingController descriptionController;
+  late final TextEditingController amountController;
+
+  @override
+  void initState() {
+    descriptionController =
+        TextEditingController(text: widget.expense.description);
+    amountController =
+        TextEditingController(text: widget.expense.amount.toString());
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +84,17 @@ class __AddExpenseFormState extends State<_AddExpenseForm> {
           Row(
             children: [
               const CancelButton(),
-              const SizedBox(width: 10),
+              const Spacer(),
               AcceptButton(
                 onPressed: () {
                   if (!formKey.currentState!.validate()) return;
 
                   final expensesProvider = context.read<ExpensesProvider>();
 
-                  expensesProvider.addExpense(
+                  expensesProvider.editExpense(
+                    widget.expense.id,
                     Expense(
-                      id: const Uuid().v4(),
+                      id: widget.expense.id,
                       description: descriptionController.text,
                       amount: double.parse(amountController.text),
                     ),
@@ -85,8 +102,8 @@ class __AddExpenseFormState extends State<_AddExpenseForm> {
 
                   Navigator.of(context).pop();
                 },
-                text: 'Agregar',
-              ),
+                text: 'Aceptar',
+              )
             ],
           ),
         ],

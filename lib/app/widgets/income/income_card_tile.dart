@@ -49,14 +49,7 @@ class IncomeCardTile extends StatelessWidget {
             );
           },
         ),
-        onTap: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            isDismissible: true,
-            builder: (context) => EditIncomeModal(income: income),
-          );
-        },
+        onTap: () => showEditIncomeModal(context, income),
       ),
     );
   }
