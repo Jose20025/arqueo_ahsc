@@ -1,69 +1,68 @@
-import 'package:arqueo_ahsc/app/models/income.dart';
-import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
+import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/drawer/custom_drawer.dart';
-import 'package:arqueo_ahsc/app/widgets/income/income_card_tile.dart';
-import 'package:arqueo_ahsc/app/widgets/income/add_income_modal.dart';
+import 'package:arqueo_ahsc/app/widgets/expense/add_expense_modal.dart';
+import 'package:arqueo_ahsc/app/widgets/expense/expense_card_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class IncomesPage extends StatelessWidget {
-  const IncomesPage({super.key});
+class ExpensesPage extends StatelessWidget {
+  const ExpensesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // Drawer
-      drawer: const CustomDrawer(page: ActivePage.incomes),
+      drawer: const CustomDrawer(page: ActivePage.expenses),
 
       // AppBar
       appBar: AppBar(
-        title: const Text('Ingresos'),
+        title: const Text('Gastos'),
         centerTitle: true,
       ),
 
-      // Body
-      body: const _IncomesList(),
+      //Body
+      body: const _ExpensesList(),
 
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            isScrollControlled: true,
             isDismissible: true,
-            builder: (context) => const AddIncomeModal(),
+            isScrollControlled: true,
+            builder: (context) => const AddExpenseModal(),
           );
         },
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.red,
         child: const Icon(Icons.add),
       ),
     );
   }
 }
 
-class _IncomesList extends StatelessWidget {
-  const _IncomesList();
+class _ExpensesList extends StatelessWidget {
+  const _ExpensesList();
 
   @override
   Widget build(BuildContext context) {
-    final List<Income> incomes = context.watch<IncomesProvider>().incomes;
+    final expenses = context.watch<ExpensesProvider>().expenses;
 
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: incomes.isEmpty
+      child: expenses.isEmpty
           ? const Center(
               child: Text(
-                'No hay ingresos todavía\nTrata de agregar uno',
+                'No hay gastos todavía\nTrata de agregar uno',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
             )
           : ListView.builder(
-              itemCount: incomes.length,
+              itemCount: expenses.length,
               itemBuilder: (context, index) {
-                final Income income = incomes[index];
+                final expense = expenses[index];
 
-                return IncomeCardTile(income);
+                return ExpenseCardTile(expense);
               },
             ),
     );

@@ -2,9 +2,7 @@ import 'package:arqueo_ahsc/app/models/income.dart';
 import 'package:flutter/material.dart';
 
 class IncomesProvider extends ChangeNotifier {
-  final List<Income> _incomes = [
-    Income(id: '1', amount: 200.32, description: 'Venta de pan'),
-  ];
+  final List<Income> _incomes = [];
 
   List<Income> get incomes => _incomes;
 
