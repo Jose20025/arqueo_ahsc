@@ -1,5 +1,5 @@
 import 'package:arqueo_ahsc/app/config/theme.dart';
-import 'package:arqueo_ahsc/app/widgets/ahsc_logo.dart';
+import 'package:arqueo_ahsc/app/widgets/public/ahsc_logo.dart';
 import 'package:flutter/material.dart';
 
 enum Active { home, incomes, expenses }

@@ -2,7 +2,7 @@ import 'package:arqueo_ahsc/app/models/income.dart';
 import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/buttons/accept_button.dart';
 import 'package:arqueo_ahsc/app/widgets/buttons/cancel_button.dart';
-import 'package:arqueo_ahsc/app/widgets/custom_drawer.dart';
+import 'package:arqueo_ahsc/app/widgets/drawer/custom_drawer.dart';
 import 'package:arqueo_ahsc/app/widgets/income/custom_income_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
