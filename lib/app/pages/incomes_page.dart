@@ -15,7 +15,7 @@ class IncomesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // Drawer
-      drawer: const CustomDrawer(page: Active.incomes),
+      drawer: const CustomDrawer(page: ActivePage.incomes),
 
       // AppBar
       appBar: AppBar(

@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
         context.read<DayCashCountsProvider>();
 
     return Scaffold(
-      drawer: const CustomDrawer(page: Active.home),
+      drawer: const CustomDrawer(page: ActivePage.home),
 
       //* AppBar
       appBar: AppBar(

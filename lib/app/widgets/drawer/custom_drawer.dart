@@ -2,12 +2,12 @@ import 'package:arqueo_ahsc/app/config/theme.dart';
 import 'package:arqueo_ahsc/app/widgets/public/ahsc_logo.dart';
 import 'package:flutter/material.dart';
 
-enum Active { home, incomes, expenses }
+enum ActivePage { home, incomes, expenses }
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key, required this.page});
 
-  final Active page;
+  final ActivePage page;
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +24,9 @@ class CustomDrawer extends StatelessWidget {
                 title: 'Inicio',
                 icon: Icons.home,
                 activePage: page,
-                pageToCompare: Active.home,
+                pageToCompare: ActivePage.home,
                 onPressed: () {
-                  if (page == Active.home) return;
+                  if (page == ActivePage.home) return;
 
                   Navigator.pushReplacementNamed(context, '/');
                 },
@@ -36,21 +36,21 @@ class CustomDrawer extends StatelessWidget {
                 title: 'Ingresos',
                 icon: Icons.wallet,
                 activePage: page,
+                pageToCompare: ActivePage.incomes,
                 onPressed: () {
-                  if (page == Active.incomes) return;
+                  if (page == ActivePage.incomes) return;
 
                   Navigator.pushReplacementNamed(context, '/incomes');
                 },
-                pageToCompare: Active.incomes,
               ),
               const SizedBox(height: 5),
               _CustomDrawerNavButton(
                 title: 'Gastos',
                 icon: Icons.account_balance_wallet_outlined,
                 activePage: page,
-                pageToCompare: Active.expenses,
+                pageToCompare: ActivePage.expenses,
                 onPressed: () {
-                  if (page == Active.expenses) return;
+                  if (page == ActivePage.expenses) return;
 
                   Navigator.pushReplacementNamed(context, '/expenses');
                 },
@@ -72,8 +72,8 @@ class _CustomDrawerNavButton extends StatelessWidget {
     required this.onPressed,
   });
 
-  final Active activePage;
-  final Active pageToCompare;
+  final ActivePage activePage;
+  final ActivePage pageToCompare;
   final void Function() onPressed;
   final String title;
   final IconData icon;
