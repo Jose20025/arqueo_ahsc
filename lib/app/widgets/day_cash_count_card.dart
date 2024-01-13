@@ -1,4 +1,5 @@
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
+import 'package:arqueo_ahsc/app/pages/close_day_cash_count_page.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -25,9 +26,12 @@ class DayCashCountCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const ListTile(
-                    leading: Icon(Icons.attach_money),
-                    title: Text('Plata en caja'),
+                  ListTile(
+                    leading: const Icon(Icons.attach_money),
+                    title: const Text('Plata en caja'),
+                    trailing: dayCashCount.isClosed
+                        ? const Icon(Icons.lock, color: Colors.red)
+                        : const Icon(Icons.lock_open, color: Colors.green),
                   ),
                   const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -48,7 +52,7 @@ class DayCashCountCard extends StatelessWidget {
                     children: [
                       Text(
                         NumberFormat.currency()
-                            .format(dayCashCount.initialCashCount.totalAmount),
+                            .format(dayCashCount.initialAmount),
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
@@ -68,7 +72,7 @@ class DayCashCountCard extends StatelessWidget {
                     subtitle: Text(
                       DateFormat.yMEd().format(dayCashCount.date),
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -216,7 +220,11 @@ class _CloseCashCountButton extends StatelessWidget {
     return FilledButton.tonal(
       onPressed: dayCashCount.finalCashCount == null
           ? () {
-              // TODO: Implementar cierre de arqueo
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CloseDayCashCountPage(),
+                ),
+              );
             }
           : null,
       style: buttonStyle,
