@@ -20,10 +20,10 @@ class IncomesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateIncomeAmount(String id, double amount) {
-    final index = _incomes.indexWhere((element) => element.id == id);
+  void updateIncome(String id, Income newIncome) {
+    final index = _incomes.indexWhere((income) => income.id == id);
 
-    _incomes[index].amount = amount;
+    _incomes[index] = newIncome;
 
     notifyListeners();
   }
