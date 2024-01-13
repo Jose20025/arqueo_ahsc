@@ -31,19 +31,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  void dispose() {
-    // Guardamos los arqueos
-    context.read<DayCashCountsProvider>().saveDayCashCounts();
-
-    // Guardamos los ingresos
-    context.read<IncomesProvider>().saveIncomes();
-
-    // Guardamos los gastos
-    context.read<ExpensesProvider>().saveExpenses();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final DayCashCountsProvider dayCashCountsProvider =
         context.read<DayCashCountsProvider>();

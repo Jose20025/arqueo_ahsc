@@ -12,6 +12,8 @@ class DayCashCountsProvider extends ChangeNotifier {
   List<DayCashCount> get dayCashCounts => _dayCashCounts.reversed.toList();
 
   void loadDayCashCounts() async {
+    if (_dayCashCounts.isNotEmpty) return;
+
     final sharedPrefs = await SharedPreferences.getInstance();
 
     final List<String> dayCashCountsString =

@@ -1,32 +1,12 @@
-import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
-import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/drawer/custom_drawer.dart';
 import 'package:arqueo_ahsc/app/widgets/expense/add_expense_modal.dart';
 import 'package:arqueo_ahsc/app/widgets/expense/expense_card_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ExpensesPage extends StatefulWidget {
+class ExpensesPage extends StatelessWidget {
   const ExpensesPage({super.key});
-
-  @override
-  State<ExpensesPage> createState() => _ExpensesPageState();
-}
-
-class _ExpensesPageState extends State<ExpensesPage> {
-  @override
-  void dispose() {
-    // Guardamos los arqueos
-    context.read<DayCashCountsProvider>().saveDayCashCounts();
-
-    // Guardamos los ingresos
-    context.read<IncomesProvider>().saveIncomes();
-
-    // Guardamos los gastos
-    context.read<ExpensesProvider>().saveExpenses();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

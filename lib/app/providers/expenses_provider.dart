@@ -10,6 +10,8 @@ class ExpensesProvider extends ChangeNotifier {
   List<Expense> get expenses => _expenses;
 
   void loadExpenses() async {
+    if (_expenses.isNotEmpty) return;
+
     final sharedPrefs = await SharedPreferences.getInstance();
 
     final List<String> expensesString =

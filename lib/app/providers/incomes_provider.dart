@@ -10,6 +10,8 @@ class IncomesProvider extends ChangeNotifier {
   List<Income> get incomes => _incomes;
 
   void loadIncomes() async {
+    if (_incomes.isNotEmpty) return;
+
     final sharedPrefs = await SharedPreferences.getInstance();
 
     final List<String> incomesString =
