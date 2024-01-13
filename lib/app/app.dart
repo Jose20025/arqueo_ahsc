@@ -1,7 +1,9 @@
 import 'package:arqueo_ahsc/app/config/theme.dart';
+import 'package:arqueo_ahsc/app/pages/expenses_page.dart';
 import 'package:arqueo_ahsc/app/pages/home_page.dart';
 import 'package:arqueo_ahsc/app/pages/incomes_page.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
+import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
 import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,7 @@ class App extends StatelessWidget {
         // Aquí van los providers
         ChangeNotifierProvider(create: (_) => DayCashCountsProvider()),
         ChangeNotifierProvider(create: (_) => IncomesProvider()),
+        ChangeNotifierProvider(create: (_) => ExpensesProvider()),
       ],
       child: MaterialApp(
         title: 'Arqueo AHSC',
@@ -25,7 +28,7 @@ class App extends StatelessWidget {
         routes: {
           '/': (_) => const HomePage(),
           '/incomes': (_) => const IncomesPage(),
-          // TODO: Hacer la ruta de gastos
+          '/expenses': (_) => const ExpensesPage(),
         },
       ),
     );
