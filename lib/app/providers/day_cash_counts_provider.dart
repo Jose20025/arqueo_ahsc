@@ -66,16 +66,19 @@ class DayCashCountsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeDayCashCount(DayCashCount dayCashCount) {
-    _dayCashCounts.remove(dayCashCount);
+  void deleteDayCashCount(String id) {
+    _dayCashCounts.removeWhere((dayCashCount) => dayCashCount.id == id);
 
     saveDayCashCounts();
 
     notifyListeners();
   }
 
-  void deleteDayCashCount(String id) {
-    _dayCashCounts.removeWhere((dayCashCount) => dayCashCount.id == id);
+  void updateDayCashCountInitialAmount(String id, double initialAmount) {
+    final DayCashCount dayCashCount =
+        _dayCashCounts.firstWhere((dayCashCount) => dayCashCount.id == id);
+
+    dayCashCount.updateInitialAmount(initialAmount);
 
     saveDayCashCounts();
 
