@@ -81,9 +81,9 @@ class DayCashCountCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      _CloseCashCountButton(dayCashCount),
-                      const SizedBox(width: 10),
                       _EditCashCountButton(dayCashCount),
+                      const SizedBox(width: 10),
+                      _CloseCashCountButton(dayCashCount),
                     ],
                   ),
                   _DeleteCashCountButton(dayCashCount)
@@ -158,52 +158,53 @@ class _EditCashCountButton extends StatelessWidget {
     return FilledButton(
         onPressed: () {
           showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text('Editar arqueo'),
-                  content: const Text('¿Qué arqueo quieres editar?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        showEditInitialAmountModal(context, dayCashCount);
-                      },
-                      child: const Text('Arqueo inicial'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Editar arqueo'),
+                content: const Text('¿Qué arqueo quieres editar?'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      showEditInitialAmountModal(context, dayCashCount);
+                    },
+                    child: const Text('Arqueo inicial'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
 
-                        if (dayCashCount.finalCashCount == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'No se puede editar el arqueo final porque no se ha realizado',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              duration: Duration(seconds: 2),
-                              showCloseIcon: true,
-                              closeIconColor: Colors.white,
-                              backgroundColor: Colors.red,
+                      if (dayCashCount.finalCashCount == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'No se puede editar el arqueo final porque no se ha realizado',
+                              style: TextStyle(color: Colors.white),
                             ),
-                          );
-                          return;
-                        }
-
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => CloseDayCashCountPage(
-                              isEdit: true,
-                              dayCashCount: dayCashCount,
-                            ),
+                            duration: Duration(seconds: 2),
+                            showCloseIcon: true,
+                            closeIconColor: Colors.white,
+                            backgroundColor: Colors.red,
                           ),
                         );
-                      },
-                      child: const Text('Arqueo Final'),
-                    )
-                  ],
-                );
-              });
+                        return;
+                      }
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CloseDayCashCountPage(
+                            isEdit: true,
+                            dayCashCount: dayCashCount,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Text('Arqueo Final'),
+                  )
+                ],
+              );
+            },
+          );
         },
         child: const Text('Editar'));
   }
@@ -222,19 +223,19 @@ class _CloseCashCountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton.tonal(
-      onPressed: dayCashCount.finalCashCount == null
-          ? () {
+    return dayCashCount.isClosed
+        ? const SizedBox.shrink()
+        : FilledButton.tonal(
+            onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const CloseDayCashCountPage(),
                 ),
               );
-            }
-          : null,
-      style: buttonStyle,
-      child: const Text('Cerrar arqueo'),
-    );
+            },
+            style: buttonStyle,
+            child: const Text('Cerrar arqueo'),
+          );
   }
 }
 
