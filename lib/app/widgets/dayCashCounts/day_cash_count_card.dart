@@ -165,33 +165,35 @@ class _EditCashCountButton extends StatelessWidget {
                   content: const Text('¿Qué arqueo quieres editar?'),
                   actions: [
                     TextButton(
-                        onPressed: () {
-                          showEditInitialAmountModal(context, dayCashCount);
-                        },
-                        child: const Text('Arqueo inicial')),
+                      onPressed: () {
+                        showEditInitialAmountModal(context, dayCashCount);
+                      },
+                      child: const Text('Arqueo inicial'),
+                    ),
                     TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
+                      onPressed: () {
+                        Navigator.pop(context);
 
-                          if (dayCashCount.finalCashCount == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'No se puede editar el arqueo final porque no se ha realizado',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                duration: Duration(seconds: 2),
-                                showCloseIcon: true,
-                                closeIconColor: Colors.white,
-                                backgroundColor: Colors.red,
+                        if (dayCashCount.finalCashCount == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                'No se puede editar el arqueo final porque no se ha realizado',
+                                style: TextStyle(color: Colors.white),
                               ),
-                            );
-                            return;
-                          }
+                              duration: Duration(seconds: 2),
+                              showCloseIcon: true,
+                              closeIconColor: Colors.white,
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                          return;
+                        }
 
-                          // TODO: Implementar edición de arqueo final
-                        },
-                        child: const Text('Arqueo Final'))
+                        // TODO: Implementar edición de arqueo final
+                      },
+                      child: const Text('Arqueo Final'),
+                    )
                   ],
                 );
               });

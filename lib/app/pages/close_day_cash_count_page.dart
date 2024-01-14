@@ -2,6 +2,7 @@ import 'package:arqueo_ahsc/app/helpers/build_error_snack_bar.dart';
 import 'package:arqueo_ahsc/app/helpers/calculate_amounts_map.dart';
 import 'package:arqueo_ahsc/app/models/cash.dart';
 import 'package:arqueo_ahsc/app/models/cash_count.dart';
+import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/cash/cash_list.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,14 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class CloseDayCashCountPage extends StatefulWidget {
-  const CloseDayCashCountPage({super.key});
+  const CloseDayCashCountPage({
+    super.key,
+    this.isEdit = false,
+    this.dayCashCount,
+  });
+
+  final bool isEdit;
+  final DayCashCount? dayCashCount;
 
   @override
   State<CloseDayCashCountPage> createState() {
@@ -50,10 +58,15 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
       bruteCash: amountsMap['bruteCash'] ?? 0,
     );
 
-    dayCashCountsProvider.closeDayCashCount(
-      dayCashCountsProvider.dayCashCounts.first.id,
-      closedCashCount,
-    );
+    if (!widget.isEdit) {
+      dayCashCountsProvider.closeDayCashCount(
+        dayCashCountsProvider.dayCashCounts.first.id,
+        closedCashCount,
+      );
+    } else {
+      dayCashCountsProvider.updateDayCashCountFinalCashCount(
+          widget.dayCashCount!.id, closedCashCount);
+    }
 
     Navigator.of(context).pop();
   }
