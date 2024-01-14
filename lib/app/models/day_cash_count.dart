@@ -7,6 +7,7 @@ class DayCashCount {
     required this.initialAmount,
     required this.date,
     this.finalCashCount,
+    this.isClosed = false,
   });
 
   // Propiedades
@@ -14,7 +15,7 @@ class DayCashCount {
   double initialAmount;
   CashCount? finalCashCount;
   final DateTime date;
-  bool isClosed = false;
+  bool isClosed;
 
   void close(CashCount finalCashCount) {
     this.finalCashCount = finalCashCount;
@@ -34,6 +35,7 @@ class DayCashCount {
           ? CashCount.fromJson(json['finalCashCount'])
           : null,
       date: DateTime.parse(json['date']),
+      isClosed: json['isClosed'] ?? false,
     );
   }
 
@@ -43,6 +45,7 @@ class DayCashCount {
       'initialAmount': initialAmount.toString(),
       'finalCashCount': finalCashCount?.toJson(),
       'date': date.toIso8601String(),
+      'isClosed': isClosed,
     };
   }
 }
