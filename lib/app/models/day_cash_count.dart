@@ -22,7 +22,7 @@ class DayCashCount {
     isClosed = true;
   }
 
-  void setInitialAmount(double initialAmount) {
+  void updateInitialAmount(double initialAmount) {
     this.initialAmount = initialAmount;
   }
 
