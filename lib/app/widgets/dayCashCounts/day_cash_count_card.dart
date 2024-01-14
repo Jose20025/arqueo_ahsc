@@ -1,6 +1,7 @@
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:arqueo_ahsc/app/pages/close_day_cash_count_page.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
+import 'package:arqueo_ahsc/app/widgets/dayCashCounts/edit_initial_amount_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -17,86 +18,81 @@ class DayCashCountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Card(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Card(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.attach_money),
+                title: const Text('Plata en caja'),
+                trailing: dayCashCount.isClosed
+                    ? const Icon(Icons.lock, color: Colors.red)
+                    : const Icon(Icons.lock_open, color: Colors.green),
+              ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ListTile(
-                    leading: const Icon(Icons.attach_money),
-                    title: const Text('Plata en caja'),
-                    trailing: dayCashCount.isClosed
-                        ? const Icon(Icons.lock, color: Colors.red)
-                        : const Icon(Icons.lock_open, color: Colors.green),
+                  Text(
+                    'Inicio',
+                    style: TextStyle(fontSize: 18),
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'Inicio',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        'Fin',
-                        style: TextStyle(fontSize: 18),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        NumberFormat.currency()
-                            .format(dayCashCount.initialAmount),
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        NumberFormat.currency().format(
-                            dayCashCount.finalCashCount == null
-                                ? 0
-                                : dayCashCount.finalCashCount!.totalAmount),
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.date_range),
-                    title: const Text('Fecha'),
-                    subtitle: Text(
-                      DateFormat.yMEd().format(dayCashCount.date),
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  const _DetailsButton(),
-                  const SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          _CloseCashCountButton(dayCashCount),
-                          const SizedBox(width: 10),
-                          _EditCashCountButton(dayCashCount),
-                        ],
-                      ),
-                      _DeleteCashCountButton(dayCashCount)
-                    ],
-                  ),
-                  const SizedBox(height: 5),
+                  Text(
+                    'Fin',
+                    style: TextStyle(fontSize: 18),
+                  )
                 ],
               ),
-            ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    NumberFormat.currency().format(dayCashCount.initialAmount),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    NumberFormat.currency().format(
+                        dayCashCount.finalCashCount == null
+                            ? 0
+                            : dayCashCount.finalCashCount!.totalAmount),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              ListTile(
+                leading: const Icon(Icons.date_range),
+                title: const Text('Fecha'),
+                subtitle: Text(
+                  DateFormat.yMEd().format(dayCashCount.date),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.w600),
+                ),
+              ),
+              const SizedBox(height: 5),
+              const _DetailsButton(),
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      _CloseCashCountButton(dayCashCount),
+                      const SizedBox(width: 10),
+                      _EditCashCountButton(dayCashCount),
+                    ],
+                  ),
+                  _DeleteCashCountButton(dayCashCount)
+                ],
+              ),
+              const SizedBox(height: 5),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -170,7 +166,7 @@ class _EditCashCountButton extends StatelessWidget {
                   actions: [
                     TextButton(
                         onPressed: () {
-                          // TODO: Implementar edición de arqueo inicial
+                          showEditInitialAmountModal(context, dayCashCount);
                         },
                         child: const Text('Arqueo inicial')),
                     TextButton(
