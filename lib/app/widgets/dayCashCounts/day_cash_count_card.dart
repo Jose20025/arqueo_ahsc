@@ -190,7 +190,14 @@ class _EditCashCountButton extends StatelessWidget {
                           return;
                         }
 
-                        // TODO: Implementar edición de arqueo final
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => CloseDayCashCountPage(
+                              isEdit: true,
+                              dayCashCount: dayCashCount,
+                            ),
+                          ),
+                        );
                       },
                       child: const Text('Arqueo Final'),
                     )
