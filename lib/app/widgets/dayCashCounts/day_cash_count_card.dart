@@ -1,5 +1,6 @@
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:arqueo_ahsc/app/pages/close_day_cash_count_page.dart';
+import 'package:arqueo_ahsc/app/pages/details_page.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/dayCashCounts/edit_initial_amount_modal.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,15 @@ class DayCashCountCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
-              const _DetailsButton(),
+              _DetailsButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DetailsPage(dayCashCount),
+                    ),
+                  );
+                },
+              ),
               const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -240,18 +249,18 @@ class _CloseCashCountButton extends StatelessWidget {
 }
 
 class _DetailsButton extends StatelessWidget {
-  const _DetailsButton();
+  _DetailsButton({required this.onPressed});
 
-  final buttonStyle = const ButtonStyle(
-      // backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
-      );
+  final void Function() onPressed;
+
+  final buttonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(Colors.blue),
+  );
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-      onPressed: () {
-        // TODO: Implementar ver detalles
-      },
+      onPressed: onPressed,
       style: buttonStyle,
       child: const Text(
         'Ver detalles',
