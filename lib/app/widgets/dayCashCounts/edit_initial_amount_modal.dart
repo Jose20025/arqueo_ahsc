@@ -110,6 +110,8 @@ class __EditInitialAmountFormState extends State<_EditInitialAmountForm> {
                     widget.dayCashCount.id,
                     double.parse(_initialAmountController.text),
                   );
+
+                  Navigator.pop(context);
                 },
                 text: 'Aceptar',
               )
