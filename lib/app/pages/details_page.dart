@@ -128,8 +128,6 @@ class _DetailsSummary extends StatelessWidget {
                   ),
                 ),
 
-          // TODO: Hacer la diferencia
-
           // Lo que debería haber
           if (dayCashCount.isClosed)
             ListTile(
@@ -144,6 +142,25 @@ class _DetailsSummary extends StatelessWidget {
               ),
               trailing: Text(
                 NumberFormat.currency().format(dayCashCount.expectedAmount),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+            ),
+
+          // Diferencia
+          if (dayCashCount.isClosed)
+            ListTile(
+              leading: const Icon(
+                Icons.compare_arrows_rounded,
+                color: Colors.blue,
+                size: 20,
+              ),
+              title: const Text(
+                'Diferencia',
+                style: TextStyle(fontSize: 15),
+              ),
+              trailing: Text(
+                NumberFormat.currency().format(dayCashCount.difference),
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
