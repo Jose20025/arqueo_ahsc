@@ -61,6 +61,8 @@ class DayCashCountsProvider extends ChangeNotifier {
 
     dayCashCount.close(closedCashCount);
 
+    // TODO: Implementar cálculo de diferencia y monto esperado
+
     saveDayCashCounts();
 
     notifyListeners();
