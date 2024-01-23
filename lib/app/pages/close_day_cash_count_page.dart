@@ -60,6 +60,7 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
 
     if (!widget.isEdit) {
       dayCashCountsProvider.closeDayCashCount(
+        context,
         dayCashCountsProvider.dayCashCounts.first.id,
         closedCashCount,
       );
