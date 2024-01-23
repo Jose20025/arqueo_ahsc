@@ -2,7 +2,12 @@ import 'dart:convert';
 
 import 'package:arqueo_ahsc/app/models/cash_count.dart';
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
+import 'package:arqueo_ahsc/app/models/expense.dart';
+import 'package:arqueo_ahsc/app/models/income.dart';
+import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
+import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -55,13 +60,17 @@ class DayCashCountsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void closeDayCashCount(String id, CashCount closedCashCount) {
+  void closeDayCashCount(
+      BuildContext context, String id, CashCount closedCashCount) {
+    final List<Income> incomes = context.read<IncomesProvider>().incomes;
+    final List<Expense> expenses = context.read<ExpensesProvider>().expenses;
+
     final DayCashCount dayCashCount =
         _dayCashCounts.firstWhere((dayCashCount) => dayCashCount.id == id);
 
     dayCashCount.close(closedCashCount);
 
-    // TODO: Implementar cálculo de diferencia y monto esperado
+    dayCashCount.calculateExpectedAmount(incomes, expenses);
 
     saveDayCashCounts();
 
