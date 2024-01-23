@@ -1,0 +1,155 @@
+import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
+import 'package:arqueo_ahsc/app/widgets/details/final_cash_count_details.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+class DetailsPage extends StatelessWidget {
+  const DetailsPage(this.dayCashCount, {super.key});
+
+  final DayCashCount dayCashCount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // AppBar
+      appBar: AppBar(
+        title: const Text('Detalles'),
+        centerTitle: true,
+      ),
+
+      // Body
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: ListView(
+          children: [
+            const Divider(),
+            const SizedBox(height: 10),
+            _DetailsSummary(dayCashCount),
+
+            // Arqueo Final
+            if (dayCashCount.isClosed) ...[
+              const SizedBox(height: 10),
+              const Divider(),
+              const SizedBox(height: 10),
+              FinalCashCountDetails(dayCashCount.finalCashCount!)
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DetailsSummary extends StatelessWidget {
+  const _DetailsSummary(this.dayCashCount);
+
+  final DayCashCount dayCashCount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      surfaceTintColor: Colors.blue,
+      child: Column(
+        children: [
+          // Fecha
+          ListTile(
+            leading: const Icon(
+              Icons.calendar_today,
+              color: Colors.blue,
+            ),
+            title: const Text(
+              'Fecha',
+              style: TextStyle(fontSize: 15),
+            ),
+            trailing: Text(
+              DateFormat.yMMMMEEEEd().format(dayCashCount.date),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+          ),
+
+          // Estado
+          ListTile(
+            leading: const Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ),
+            title: const Text(
+              'Estado',
+              style: TextStyle(fontSize: 15),
+            ),
+            trailing: Text(
+              dayCashCount.isClosed ? 'Cerrado' : 'Sin cerrar',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+          ),
+
+          // Monto Inicial
+          ListTile(
+            leading: const Icon(
+              Icons.attach_money,
+              color: Colors.green,
+            ),
+            title: const Text(
+              'Monto Inicial',
+              style: TextStyle(fontSize: 15),
+            ),
+            trailing: Text(
+              NumberFormat.currency().format(dayCashCount.initialAmount),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+          ),
+
+          // Monto Final
+          dayCashCount.isClosed
+              ? ListTile(
+                  leading: const Icon(
+                    Icons.attach_money,
+                    color: Colors.green,
+                  ),
+                  title: const Text(
+                    'Monto Final',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  trailing: Text(
+                    NumberFormat.currency()
+                        .format(dayCashCount.finalCashCount!.totalAmount),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                )
+              : const ListTile(
+                  leading: Icon(
+                    Icons.warning,
+                    color: Colors.redAccent,
+                  ),
+                  title: Text(
+                    'No se ha cerrado el arqueo',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+
+          // TODO: Hacer la diferencia
+
+          // Lo que debería haber
+          if (dayCashCount.isClosed)
+            ListTile(
+              leading: const Icon(
+                Icons.question_mark_rounded,
+                color: Colors.blue,
+                size: 20,
+              ),
+              title: const Text(
+                'Lo que debería haber',
+                style: TextStyle(fontSize: 15),
+              ),
+              trailing: Text(
+                NumberFormat.currency().format(dayCashCount.expectedAmount),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
