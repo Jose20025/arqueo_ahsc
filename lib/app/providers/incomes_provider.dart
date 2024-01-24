@@ -28,6 +28,16 @@ class IncomesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void cleanIncomes() async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+
+    sharedPrefs.remove('incomes');
+
+    _incomes.clear();
+
+    notifyListeners();
+  }
+
   void saveIncomes() async {
     final sharedPrefs = await SharedPreferences.getInstance();
 
