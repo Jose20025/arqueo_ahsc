@@ -4,6 +4,7 @@ import 'package:arqueo_ahsc/app/widgets/buttons/clean_list_button.dart';
 import 'package:arqueo_ahsc/app/widgets/drawer/custom_drawer.dart';
 import 'package:arqueo_ahsc/app/widgets/income/income_card_tile.dart';
 import 'package:arqueo_ahsc/app/widgets/income/add_income_modal.dart';
+import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,22 +28,12 @@ class IncomesPage extends StatelessWidget {
             onPressed: () {
               showDialog(
                 context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('¿Estás seguro?'),
-                  content: const Text('¿Deseas eliminar todos los ingresos?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancelar'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.read<IncomesProvider>().cleanIncomes();
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Eliminar'),
-                    ),
-                  ],
+                builder: (context) => ConfirmationDialog(
+                  onAccept: () {
+                    context.read<IncomesProvider>().cleanIncomes();
+                  },
+                  description: '¿Deseas eliminar todos los ingresos?',
+                  color: Colors.blue,
                 ),
               );
             },
