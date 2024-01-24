@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class IncomesProvider extends ChangeNotifier {
   final List<Income> _incomes = [];
+  double total = 0;
 
   List<Income> get incomes => _incomes;
 
@@ -23,6 +24,8 @@ class IncomesProvider extends ChangeNotifier {
       final Income income = Income.fromJson(jsonDecode(incomeString));
 
       _incomes.add(income);
+
+      total += income.amount;
     }
 
     notifyListeners();
@@ -34,6 +37,8 @@ class IncomesProvider extends ChangeNotifier {
     sharedPrefs.remove('incomes');
 
     _incomes.clear();
+
+    total = 0;
 
     notifyListeners();
   }
@@ -52,10 +57,14 @@ class IncomesProvider extends ChangeNotifier {
 
     saveIncomes();
 
+    total += income.amount;
+
     notifyListeners();
   }
 
   void removeIncome(String id) {
+    total -= _incomes.firstWhere((income) => income.id == id).amount;
+
     _incomes.removeWhere((income) => income.id == id);
 
     saveIncomes();
@@ -66,7 +75,11 @@ class IncomesProvider extends ChangeNotifier {
   void updateIncome(String id, Income newIncome) {
     final index = _incomes.indexWhere((income) => income.id == id);
 
+    total -= _incomes[index].amount;
+
     _incomes[index] = newIncome;
+
+    total += newIncome.amount;
 
     saveIncomes();
 

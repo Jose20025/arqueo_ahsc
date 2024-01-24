@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ExpensesProvider extends ChangeNotifier {
   final List<Expense> _expenses = [];
+  double total = 0;
 
   List<Expense> get expenses => _expenses;
 
@@ -23,6 +24,8 @@ class ExpensesProvider extends ChangeNotifier {
       final Expense expense = Expense.fromJson(jsonDecode(expenseString));
 
       _expenses.add(expense);
+
+      total += expense.amount;
     }
 
     notifyListeners();
@@ -34,6 +37,8 @@ class ExpensesProvider extends ChangeNotifier {
     sharedPrefs.remove('expenses');
 
     _expenses.clear();
+
+    total = 0;
 
     notifyListeners();
   }
@@ -52,10 +57,14 @@ class ExpensesProvider extends ChangeNotifier {
 
     saveExpenses();
 
+    total += expense.amount;
+
     notifyListeners();
   }
 
   void removeExpense(String id) {
+    total -= _expenses.firstWhere((expense) => expense.id == id).amount;
+
     _expenses.removeWhere((expense) => expense.id == id);
 
     saveExpenses();
@@ -66,7 +75,11 @@ class ExpensesProvider extends ChangeNotifier {
   void editExpense(String id, Expense expense) {
     final index = _expenses.indexWhere((expense) => expense.id == id);
 
+    total -= _expenses[index].amount;
+
     _expenses[index] = expense;
+
+    total += expense.amount;
 
     saveExpenses();
 
