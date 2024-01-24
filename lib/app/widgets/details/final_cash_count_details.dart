@@ -133,6 +133,14 @@ class FinalCashCountDetails extends StatelessWidget {
                 ),
               ),
               ListTile(
+                title: Text('Monto bruto', style: style),
+                trailing: Text(
+                  NumberFormat.currency().format(cashCount.bruteCash),
+                  style: style,
+                ),
+              ),
+              const Divider(),
+              ListTile(
                 leading: const Icon(Icons.attach_money, color: Colors.green),
                 title: const Text('Total'),
                 trailing: Text(
