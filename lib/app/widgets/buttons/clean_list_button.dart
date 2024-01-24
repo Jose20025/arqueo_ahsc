@@ -18,8 +18,7 @@ class CleanListButton extends StatelessWidget {
       onPressed: onPressed,
       color: iconColor,
       style: ButtonStyle(
-        backgroundColor:
-            color != null ? const MaterialStatePropertyAll(Colors.blue) : null,
+        backgroundColor: color != null ? MaterialStatePropertyAll(color) : null,
         shape: const MaterialStatePropertyAll(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
