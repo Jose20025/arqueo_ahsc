@@ -23,28 +23,32 @@ class IncomesPage extends StatelessWidget {
 
         // Actions
         actions: [
-          CleanListButton(onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('¿Estás seguro?'),
-                content: const Text('¿Deseas eliminar todos los ingresos?'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancelar'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      context.read<IncomesProvider>().cleanIncomes();
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Eliminar'),
-                  ),
-                ],
-              ),
-            );
-          }),
+          CleanListButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('¿Estás seguro?'),
+                  content: const Text('¿Deseas eliminar todos los ingresos?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancelar'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.read<IncomesProvider>().cleanIncomes();
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Eliminar'),
+                    ),
+                  ],
+                ),
+              );
+            },
+            color: Colors.blue,
+            iconColor: Colors.white,
+          ),
           const SizedBox(width: 10),
         ],
       ),
