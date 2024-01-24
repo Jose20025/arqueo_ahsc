@@ -28,6 +28,16 @@ class ExpensesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void cleanExpenses() async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+
+    sharedPrefs.remove('expenses');
+
+    _expenses.clear();
+
+    notifyListeners();
+  }
+
   void saveExpenses() async {
     final sharedPrefs = await SharedPreferences.getInstance();
 
