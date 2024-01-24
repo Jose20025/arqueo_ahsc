@@ -33,6 +33,8 @@ class DetailsPage extends StatelessWidget {
               const SizedBox(height: 10),
               FinalCashCountDetails(dayCashCount.finalCashCount!)
             ],
+
+            const SizedBox(height: 10),
           ],
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:arqueo_ahsc/app/widgets/buttons/clean_list_button.dart';
 import 'package:arqueo_ahsc/app/widgets/drawer/custom_drawer.dart';
 import 'package:arqueo_ahsc/app/widgets/expense/add_expense_modal.dart';
 import 'package:arqueo_ahsc/app/widgets/expense/expense_card_tile.dart';
+import 'package:arqueo_ahsc/app/widgets/public/bottom_total_container.dart';
 import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +46,15 @@ class ExpensesPage extends StatelessWidget {
       ),
 
       //Body
-      body: const _ExpensesList(),
+      body: Column(
+        children: [
+          const _ExpensesList(),
+          BottomTotalContainer(
+            value: context.watch<ExpensesProvider>().total,
+            color: Colors.red,
+          ),
+        ],
+      ),
 
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
@@ -71,24 +80,26 @@ class _ExpensesList extends StatelessWidget {
   Widget build(BuildContext context) {
     final expenses = context.watch<ExpensesProvider>().expenses;
 
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: expenses.isEmpty
-          ? const Center(
-              child: Text(
-                'No hay gastos todavía\nTrata de agregar uno',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-            )
-          : ListView.builder(
-              itemCount: expenses.length,
-              itemBuilder: (context, index) {
-                final expense = expenses[index];
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: expenses.isEmpty
+            ? const Center(
+                child: Text(
+                  'No hay gastos todavía\nTrata de agregar uno',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              )
+            : ListView.builder(
+                itemCount: expenses.length,
+                itemBuilder: (context, index) {
+                  final expense = expenses[index];
 
-                return ExpenseCardTile(expense);
-              },
-            ),
+                  return ExpenseCardTile(expense);
+                },
+              ),
+      ),
     );
   }
 }
