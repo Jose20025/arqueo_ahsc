@@ -15,7 +15,7 @@ class FinalCashCountDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Cantidades - Arqueo Final',
+          'Desglose del Arqueo Final',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
@@ -132,6 +132,14 @@ class FinalCashCountDetails extends StatelessWidget {
                   style: style,
                 ),
               ),
+              ListTile(
+                title: Text('Monto bruto', style: style),
+                trailing: Text(
+                  NumberFormat.currency().format(cashCount.bruteCash),
+                  style: style,
+                ),
+              ),
+              const Divider(),
               ListTile(
                 leading: const Icon(Icons.attach_money, color: Colors.green),
                 title: const Text('Total'),

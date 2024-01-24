@@ -1,5 +1,6 @@
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:arqueo_ahsc/app/widgets/details/final_cash_count_details.dart';
+import 'package:arqueo_ahsc/app/widgets/details/operations_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -31,7 +32,11 @@ class DetailsPage extends StatelessWidget {
               const SizedBox(height: 10),
               const Divider(),
               const SizedBox(height: 10),
-              FinalCashCountDetails(dayCashCount.finalCashCount!)
+              FinalCashCountDetails(dayCashCount.finalCashCount!),
+              const SizedBox(height: 10),
+              const Divider(),
+              const SizedBox(height: 10),
+              OperationsSummary(dayCashCount),
             ],
           ],
         ),
@@ -159,11 +164,19 @@ class _DetailsSummary extends StatelessWidget {
                 'Diferencia',
                 style: TextStyle(fontSize: 15),
               ),
-              trailing: Text(
-                NumberFormat.currency().format(dayCashCount.difference),
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              ),
+              trailing: dayCashCount.difference != 0
+                  ? Text(
+                      NumberFormat.currency().format(dayCashCount.difference),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 15),
+                    )
+                  : const Text(
+                      '😎 Cuadró la caja',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
             ),
         ],
       ),
