@@ -1,10 +1,8 @@
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
-import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
-import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/details/final_cash_count_details.dart';
+import 'package:arqueo_ahsc/app/widgets/details/operations_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class DetailsPage extends StatelessWidget {
   const DetailsPage(this.dayCashCount, {super.key});
@@ -34,10 +32,12 @@ class DetailsPage extends StatelessWidget {
               const SizedBox(height: 10),
               const Divider(),
               const SizedBox(height: 10),
-              FinalCashCountDetails(dayCashCount.finalCashCount!)
+              FinalCashCountDetails(dayCashCount.finalCashCount!),
+              const SizedBox(height: 10),
+              const Divider(),
+              const SizedBox(height: 10),
+              OperationsSummary(dayCashCount),
             ],
-
-            const SizedBox(height: 10),
           ],
         ),
       ),
@@ -178,35 +178,6 @@ class _DetailsSummary extends StatelessWidget {
                       ),
                     ),
             ),
-
-          // Ingresos y Gastos
-          const Divider(),
-
-          ListTile(
-            leading: const Icon(
-              Icons.attach_money,
-              color: Colors.green,
-            ),
-            title: const Text('Ingresos totales'),
-            trailing: Text(
-              NumberFormat.currency()
-                  .format(context.read<IncomesProvider>().total),
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-          ),
-
-          ListTile(
-            leading: const Icon(
-              Icons.money_off,
-              color: Colors.red,
-            ),
-            title: const Text('Gastos totales'),
-            trailing: Text(
-              NumberFormat.currency()
-                  .format(context.read<ExpensesProvider>().total),
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-          ),
         ],
       ),
     );
