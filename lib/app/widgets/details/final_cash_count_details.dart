@@ -15,7 +15,7 @@ class FinalCashCountDetails extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Cantidades - Arqueo Final',
+          'Desglose del Arqueo Final',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
