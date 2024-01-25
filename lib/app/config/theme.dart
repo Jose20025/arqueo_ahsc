@@ -30,9 +30,8 @@ class ThemeConfig {
         // Filled button theme
         filledButtonTheme: FilledButtonThemeData(
           style: ButtonStyle(
-            // backgroundColor: MaterialStateProperty.all(secondaryColor),
-            surfaceTintColor: MaterialStateProperty.all(secondaryColor),
-            // foregroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor: MaterialStateProperty.all(secondaryColor),
+            foregroundColor: MaterialStateProperty.all(Colors.white),
             textStyle: MaterialStateProperty.all(
               const TextStyle(fontWeight: FontWeight.w600),
             ),
