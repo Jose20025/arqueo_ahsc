@@ -36,6 +36,16 @@ class CashListProvider extends ChangeNotifier {
     sharedPrefs.setStringList('cashList', cashListString);
   }
 
+  void cleanCashList() async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+
+    sharedPrefs.remove('cashList');
+
+    cashList.clear();
+
+    notifyListeners();
+  }
+
   void addNewCash(Cash cash) {
     cashList.add(cash);
 
