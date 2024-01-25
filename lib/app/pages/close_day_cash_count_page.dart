@@ -300,9 +300,10 @@ class _BottomMenuState extends State<_BottomMenu> {
                 ],
               ),
               const SizedBox(width: 10),
-              FilledButton.tonal(
+              FilledButton.tonalIcon(
                 onPressed: addNewCash,
-                child: const Text('Agregar'),
+                label: const Text('Agregar'),
+                icon: const Icon(Icons.add),
               ),
             ],
           )
