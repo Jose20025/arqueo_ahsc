@@ -8,8 +8,15 @@ import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ExpensesPage extends StatelessWidget {
+class ExpensesPage extends StatefulWidget {
   const ExpensesPage({super.key});
+
+  @override
+  State<ExpensesPage> createState() => _ExpensesPageState();
+}
+
+class _ExpensesPageState extends State<ExpensesPage> {
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,7 @@ class ExpensesPage extends StatelessWidget {
       //Body
       body: Column(
         children: [
-          const _ExpensesList(),
+          _ExpensesList(scrollController: _scrollController),
           BottomTotalContainer(
             value: context.watch<ExpensesProvider>().total,
             color: Colors.red,
@@ -58,12 +65,13 @@ class ExpensesPage extends StatelessWidget {
 
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isDismissible: true,
-            isScrollControlled: true,
-            builder: (context) => const AddExpenseModal(),
+        onPressed: () async {
+          await showAddExpenseModal(context);
+
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeIn,
           );
         },
         backgroundColor: Colors.red,
@@ -74,7 +82,9 @@ class ExpensesPage extends StatelessWidget {
 }
 
 class _ExpensesList extends StatelessWidget {
-  const _ExpensesList();
+  const _ExpensesList({this.scrollController});
+
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +102,7 @@ class _ExpensesList extends StatelessWidget {
                 ),
               )
             : ListView.builder(
+                controller: scrollController,
                 itemCount: expenses.length,
                 itemBuilder: (context, index) {
                   final expense = expenses[index];
