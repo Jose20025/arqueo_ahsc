@@ -3,6 +3,7 @@ import 'package:arqueo_ahsc/app/helpers/calculate_amounts_map.dart';
 import 'package:arqueo_ahsc/app/models/cash.dart';
 import 'package:arqueo_ahsc/app/models/cash_count.dart';
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
+import 'package:arqueo_ahsc/app/providers/cash_list_provider.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/cash/cash_list.dart';
 import 'package:flutter/material.dart';
@@ -26,23 +27,18 @@ class CloseDayCashCountPage extends StatefulWidget {
 }
 
 class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
-  List<Cash> cashList = [];
+  late CashListProvider cashListProvider;
   late final DayCashCountsProvider dayCashCountsProvider;
 
   @override
   void initState() {
     super.initState();
     dayCashCountsProvider = context.read<DayCashCountsProvider>();
-  }
-
-  void addNewCash(Cash cash) {
-    setState(() {
-      cashList.add(cash);
-    });
+    cashListProvider = context.read<CashListProvider>();
   }
 
   void addNewDayCashCount() {
-    final amountsMap = calculateAmountsMap(cashList);
+    final amountsMap = calculateAmountsMap(cashListProvider.cashList);
 
     final CashCount closedCashCount = CashCount(
       totalAmount: amountsMap['total'],
@@ -72,14 +68,10 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
     Navigator.of(context).pop();
   }
 
-  void deleteCash(String id) {
-    setState(() {
-      cashList.removeWhere((cash) => cash.id == id);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final List<Cash> cashList = context.watch<CashListProvider>().cashList;
+
     return Scaffold(
       // AppBar
       appBar: AppBar(
@@ -103,11 +95,15 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
           children: [
             CashList(
               cashList,
-              onDelete: deleteCash,
+              onDelete: (String id) {
+                cashListProvider.removeCash(id);
+              },
             ),
             const SizedBox(height: 10),
             _BottomMenu(
-              onNewCashAdded: addNewCash,
+              onNewCashAdded: (Cash cash) {
+                cashListProvider.addNewCash(cash);
+              },
             )
           ],
         ),
