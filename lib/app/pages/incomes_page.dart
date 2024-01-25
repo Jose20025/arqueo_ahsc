@@ -9,8 +9,15 @@ import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class IncomesPage extends StatelessWidget {
+class IncomesPage extends StatefulWidget {
   const IncomesPage({super.key});
+
+  @override
+  State<IncomesPage> createState() => _IncomesPageState();
+}
+
+class _IncomesPageState extends State<IncomesPage> {
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,7 @@ class IncomesPage extends StatelessWidget {
       // Body
       body: Column(
         children: [
-          const _IncomesList(),
+          _IncomesList(scrollController: _scrollController),
           BottomTotalContainer(
             value: context.watch<IncomesProvider>().total,
             color: Colors.blue,
@@ -58,7 +65,19 @@ class IncomesPage extends StatelessWidget {
 
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
-        onPressed: () => showAddIncomeModal(context),
+        onPressed: () async {
+          bool canScroll = context.read<IncomesProvider>().incomes.isNotEmpty;
+
+          await showAddIncomeModal(context);
+
+          if (canScroll) {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              duration: const Duration(seconds: 1),
+              curve: Curves.easeIn,
+            );
+          }
+        },
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
@@ -67,7 +86,9 @@ class IncomesPage extends StatelessWidget {
 }
 
 class _IncomesList extends StatelessWidget {
-  const _IncomesList();
+  const _IncomesList({this.scrollController});
+
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +106,7 @@ class _IncomesList extends StatelessWidget {
                 ),
               )
             : ListView.builder(
+                controller: scrollController,
                 itemCount: incomes.length,
                 itemBuilder: (context, index) {
                   final Income income = incomes[index];

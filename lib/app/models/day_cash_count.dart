@@ -23,6 +23,9 @@ class DayCashCount {
   double difference;
   double expectedAmount;
 
+  bool get isExpectedAmountOk => difference == 0;
+  bool get isMoneyMissing => difference < 0;
+
   void close(CashCount finalCashCount) {
     this.finalCashCount = finalCashCount;
 

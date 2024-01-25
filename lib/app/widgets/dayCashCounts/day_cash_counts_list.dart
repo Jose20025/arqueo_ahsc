@@ -1,6 +1,7 @@
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/dayCashCounts/day_cash_count_card.dart';
+import 'package:arqueo_ahsc/app/widgets/dayCashCounts/day_cash_count_mini_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,13 @@ class DayCashCountsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        itemBuilder: (_, index) => DayCashCountCard(dayCashCountList[index]),
+        itemBuilder: (_, index) {
+          if (index == 0) {
+            return DayCashCountCard(dayCashCountList[index]);
+          }
+
+          return DayCashCountMiniCard(dayCashCountList[index]);
+        },
         itemCount: dayCashCountList.length,
       ),
     );

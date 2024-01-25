@@ -3,8 +3,14 @@ import 'package:arqueo_ahsc/app/helpers/calculate_amounts_map.dart';
 import 'package:arqueo_ahsc/app/models/cash.dart';
 import 'package:arqueo_ahsc/app/models/cash_count.dart';
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
+import 'package:arqueo_ahsc/app/models/expense.dart';
+import 'package:arqueo_ahsc/app/models/income.dart';
+import 'package:arqueo_ahsc/app/providers/cash_list_provider.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
+import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
+import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/cash/cash_list.dart';
+import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -26,23 +32,24 @@ class CloseDayCashCountPage extends StatefulWidget {
 }
 
 class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
-  List<Cash> cashList = [];
+  late CashListProvider cashListProvider;
   late final DayCashCountsProvider dayCashCountsProvider;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     dayCashCountsProvider = context.read<DayCashCountsProvider>();
+    cashListProvider = context.read<CashListProvider>();
   }
 
-  void addNewCash(Cash cash) {
-    setState(() {
-      cashList.add(cash);
-    });
-  }
+  void closeDayCashCount() {
+    if (cashListProvider.cashList.isEmpty) {
+      showErrorSnackBar(context, title: 'Agrega al menos un efectivo');
+      return;
+    }
 
-  void addNewDayCashCount() {
-    final amountsMap = calculateAmountsMap(cashList);
+    final amountsMap = calculateAmountsMap(cashListProvider.cashList);
 
     final CashCount closedCashCount = CashCount(
       totalAmount: amountsMap['total'],
@@ -64,18 +71,18 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
         dayCashCountsProvider.dayCashCounts.first.id,
         closedCashCount,
       );
+
+      final List<Income> incomes = context.read<IncomesProvider>().incomes;
+      final List<Expense> expenses = context.read<ExpensesProvider>().expenses;
+
+      dayCashCountsProvider.recalculateExpectedAmountAndDifference(
+          dayCashCountsProvider.dayCashCounts.first.id, incomes, expenses);
     } else {
       dayCashCountsProvider.updateDayCashCountFinalCashCount(
           widget.dayCashCount!.id, closedCashCount);
     }
 
     Navigator.of(context).pop();
-  }
-
-  void deleteCash(String id) {
-    setState(() {
-      cashList.removeWhere((cash) => cash.id == id);
-    });
   }
 
   @override
@@ -87,27 +94,35 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
         centerTitle: true,
       ),
 
-      // floatingActionButton
-      floatingActionButton: cashList.isNotEmpty
-          ? FloatingActionButton(
-              onPressed: () => addNewDayCashCount(),
-              child: const Icon(Icons.save),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-
       // Body
       body: Container(
         margin: const EdgeInsets.all(10),
         child: Column(
           children: [
             CashList(
-              cashList,
-              onDelete: deleteCash,
+              scrollController: _scrollController,
+              onDelete: (String id) {
+                cashListProvider.removeCash(id);
+              },
             ),
             const SizedBox(height: 10),
             _BottomMenu(
-              onNewCashAdded: addNewCash,
+              onNewCashAdded: (Cash cash) {
+                bool canScroll =
+                    context.read<CashListProvider>().cashList.isNotEmpty;
+
+                cashListProvider.addNewCash(cash);
+
+                if (canScroll) {
+                  // Hago scroll hasta el final
+                  _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeOut,
+                  );
+                }
+              },
+              onCloseDayCashCount: closeDayCashCount,
             )
           ],
         ),
@@ -117,9 +132,11 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
 }
 
 class _BottomMenu extends StatefulWidget {
-  const _BottomMenu({required this.onNewCashAdded});
+  const _BottomMenu(
+      {required this.onNewCashAdded, required this.onCloseDayCashCount});
 
   final Function(Cash) onNewCashAdded;
+  final void Function() onCloseDayCashCount;
 
   @override
   State<_BottomMenu> createState() => _BottomMenuState();
@@ -266,11 +283,48 @@ class _BottomMenuState extends State<_BottomMenu> {
           ),
           const SizedBox(height: 10),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Spacer(),
-              FilledButton.tonal(
+              Row(
+                children: [
+                  FilledButton.tonal(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmationDialog(
+                          description:
+                              '¿Estás seguro de que quieres finalizar el arqueo?',
+                          onAccept: () {
+                            widget.onCloseDayCashCount();
+                          },
+                        ),
+                      );
+                    },
+                    child: const Icon(Icons.save),
+                  ),
+                  const SizedBox(width: 5),
+                  FilledButton.tonal(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmationDialog(
+                          description:
+                              '¿Estás seguro de que quieres limpiar la lista?',
+                          onAccept: () {
+                            context.read<CashListProvider>().cleanCashList();
+                          },
+                        ),
+                      );
+                    },
+                    child: const Icon(Icons.restore_outlined),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 10),
+              FilledButton.tonalIcon(
                 onPressed: addNewCash,
-                child: const Text('Agregar'),
+                label: const Text('Agregar'),
+                icon: const Icon(Icons.add),
               ),
             ],
           )
