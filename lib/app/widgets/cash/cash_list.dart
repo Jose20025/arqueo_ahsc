@@ -1,19 +1,33 @@
 import 'package:arqueo_ahsc/app/models/cash.dart';
+import 'package:arqueo_ahsc/app/providers/cash_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CashList extends StatelessWidget {
-  const CashList(this.cashList, {super.key, required this.onDelete});
+  const CashList({super.key, required this.onDelete, this.scrollController});
 
-  final List<Cash> cashList;
   final void Function(String) onDelete;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
+    final List<Cash> cashList = context.watch<CashListProvider>().cashList;
+
     return Expanded(
       child: cashList.isEmpty
           ? const _NoCash()
-          : _CashList(cashList, onDelete: onDelete),
+          : ListView.separated(
+              controller: scrollController,
+              itemBuilder: (_, index) {
+                return _CashCard(
+                  cashList[index],
+                  onDelete: onDelete,
+                );
+              },
+              separatorBuilder: (_, __) => const SizedBox(height: 5),
+              itemCount: cashList.length,
+            ),
     );
   }
 }
@@ -32,27 +46,6 @@ class _NoCash extends StatelessWidget {
         ),
         textAlign: TextAlign.center,
       ),
-    );
-  }
-}
-
-class _CashList extends StatelessWidget {
-  const _CashList(this.cashList, {required this.onDelete});
-
-  final List<Cash> cashList;
-  final void Function(String) onDelete;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-      itemBuilder: (_, index) {
-        return _CashCard(
-          cashList[index],
-          onDelete: onDelete,
-        );
-      },
-      separatorBuilder: (_, __) => const SizedBox(height: 5),
-      itemCount: cashList.length,
     );
   }
 }
