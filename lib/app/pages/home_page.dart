@@ -59,9 +59,10 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           if (dayCashCountsProvider.dayCashCounts.isNotEmpty &&
               !dayCashCountsProvider.dayCashCounts.first.isClosed) {
-            showErrorSnackBar(context,
-                title:
-                    'Debes cerrar el arqueo actual antes de agregar uno nuevo');
+            showErrorSnackBar(
+              context,
+              title: 'Debes cerrar el arqueo actual antes de agregar uno nuevo',
+            );
 
             return;
           }
