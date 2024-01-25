@@ -31,11 +31,7 @@ class DayCashCountCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // ListTile(
-              //   leading: const Icon(Icons.attach_money),
-              //   title: const Text('Plata en caja'),
-              //   trailing: _DeleteCashCountButton(dayCashCount),
-              // ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   const Icon(
@@ -45,23 +41,51 @@ class DayCashCountCard extends StatelessWidget {
                   const SizedBox(width: 10),
                   const Text(
                     'Plata en caja',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 16),
                   ),
                   const Spacer(),
-                  _DeleteCashCountButton(dayCashCount),
+                  Row(
+                    children: [
+                      const Text(
+                        'Estado: ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: !dayCashCount.isClosed
+                              ? Colors.green
+                              : Colors.red,
+                        ),
+                        child: Text(
+                          dayCashCount.isClosed ? 'Cerrado' : 'Abierto',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 15),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     'Inicio',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 16),
                   ),
                   Text(
                     'Fin',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 16),
                   )
                 ],
               ),
@@ -72,7 +96,7 @@ class DayCashCountCard extends StatelessWidget {
                   Text(
                     NumberFormat.currency().format(dayCashCount.initialAmount),
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     NumberFormat.currency().format(
@@ -80,7 +104,7 @@ class DayCashCountCard extends StatelessWidget {
                             ? 0
                             : dayCashCount.finalCashCount!.totalAmount),
                     style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -94,13 +118,13 @@ class DayCashCountCard extends StatelessWidget {
                   const SizedBox(width: 10),
                   const Text(
                     'Fecha',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 16),
                   ),
                   const Spacer(),
                   Text(
                     DateFormat.yMMMEd().format(dayCashCount.date),
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -120,7 +144,13 @@ class DayCashCountCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _EditCashCountButton(dayCashCount),
+                  Row(
+                    children: [
+                      _DeleteCashCountButton(dayCashCount),
+                      const SizedBox(width: 5),
+                      _EditCashCountButton(dayCashCount),
+                    ],
+                  ),
                   _CloseCashCountButton(dayCashCount),
                 ],
               ),
@@ -146,7 +176,7 @@ class _DeleteCashCountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
+    return FilledButton(
       style: buttonStyle,
       onPressed: () {
         showDialog(
@@ -161,7 +191,7 @@ class _DeleteCashCountButton extends StatelessWidget {
           ),
         );
       },
-      icon: const Icon(Icons.delete),
+      child: const Icon(Icons.delete),
     );
   }
 }
