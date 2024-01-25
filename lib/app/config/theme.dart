@@ -14,7 +14,7 @@ class ThemeConfig {
         // Scaffold background color
         scaffoldBackgroundColor: backgroundColor,
 
-        // Appbar Theme
+        // App Bar Theme
         appBarTheme: const AppBarTheme(
           backgroundColor: backgroundColor,
           elevation: 0,
@@ -30,8 +30,9 @@ class ThemeConfig {
         // Filled button theme
         filledButtonTheme: FilledButtonThemeData(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(secondaryColor),
-            foregroundColor: MaterialStateProperty.all(Colors.white),
+            // backgroundColor: MaterialStateProperty.all(secondaryColor),
+            surfaceTintColor: MaterialStateProperty.all(secondaryColor),
+            // foregroundColor: MaterialStateProperty.all(Colors.white),
             textStyle: MaterialStateProperty.all(
               const TextStyle(fontWeight: FontWeight.w600),
             ),
@@ -48,9 +49,9 @@ class ThemeConfig {
 
         // Card theme
         cardTheme: CardTheme(
-          elevation: 2,
+          elevation: 1,
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.black.withOpacity(0.4), width: 1),
+            side: BorderSide(color: Colors.grey.withOpacity(0.5), width: 0.5),
             borderRadius: BorderRadius.circular(20),
           ),
         ),
