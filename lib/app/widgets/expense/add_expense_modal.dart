@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-void showAddExpenseModal(BuildContext context) {
-  showModalBottomSheet(
+Future<void> showAddExpenseModal(BuildContext context) async {
+  await showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     isDismissible: true,
