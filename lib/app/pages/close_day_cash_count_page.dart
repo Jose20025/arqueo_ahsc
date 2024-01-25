@@ -30,6 +30,7 @@ class CloseDayCashCountPage extends StatefulWidget {
 class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
   late CashListProvider cashListProvider;
   late final DayCashCountsProvider dayCashCountsProvider;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -76,8 +77,6 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Cash> cashList = context.watch<CashListProvider>().cashList;
-
     return Scaffold(
       // AppBar
       appBar: AppBar(
@@ -91,7 +90,7 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
         child: Column(
           children: [
             CashList(
-              cashList,
+              scrollController: _scrollController,
               onDelete: (String id) {
                 cashListProvider.removeCash(id);
               },
@@ -100,6 +99,15 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
             _BottomMenu(
               onNewCashAdded: (Cash cash) {
                 cashListProvider.addNewCash(cash);
+
+                if (context.read<CashListProvider>().cashList.isNotEmpty) {
+                  // Hago scroll hasta el final
+                  _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeOut,
+                  );
+                }
               },
               onCloseDayCashCount: closeDayCashCount,
             )
