@@ -1,4 +1,5 @@
 import 'package:arqueo_ahsc/app/helpers/build_error_snack_bar.dart';
+import 'package:arqueo_ahsc/app/providers/cash_list_provider.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
 import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
@@ -27,6 +28,9 @@ class _HomePageState extends State<HomePage> {
 
     // Cargamos los gastos
     context.read<ExpensesProvider>().loadExpenses();
+
+    // Cargamos el cash list
+    context.read<CashListProvider>().loadCashList();
     super.initState();
   }
 
