@@ -6,6 +6,7 @@ import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
 import 'package:arqueo_ahsc/app/providers/cash_list_provider.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/cash/cash_list.dart';
+import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -37,7 +38,12 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
     cashListProvider = context.read<CashListProvider>();
   }
 
-  void addNewDayCashCount() {
+  void closeDayCashCount() {
+    if (cashListProvider.cashList.isEmpty) {
+      showErrorSnackBar(context, title: 'Agrega al menos un efectivo');
+      return;
+    }
+
     final amountsMap = calculateAmountsMap(cashListProvider.cashList);
 
     final CashCount closedCashCount = CashCount(
@@ -79,15 +85,6 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
         centerTitle: true,
       ),
 
-      // floatingActionButton
-      floatingActionButton: cashList.isNotEmpty
-          ? FloatingActionButton(
-              onPressed: () => addNewDayCashCount(),
-              child: const Icon(Icons.save),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-
       // Body
       body: Container(
         margin: const EdgeInsets.all(10),
@@ -104,6 +101,7 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
               onNewCashAdded: (Cash cash) {
                 cashListProvider.addNewCash(cash);
               },
+              onCloseDayCashCount: closeDayCashCount,
             )
           ],
         ),
@@ -113,9 +111,11 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
 }
 
 class _BottomMenu extends StatefulWidget {
-  const _BottomMenu({required this.onNewCashAdded});
+  const _BottomMenu(
+      {required this.onNewCashAdded, required this.onCloseDayCashCount});
 
   final Function(Cash) onNewCashAdded;
+  final void Function() onCloseDayCashCount;
 
   @override
   State<_BottomMenu> createState() => _BottomMenuState();
@@ -262,8 +262,44 @@ class _BottomMenuState extends State<_BottomMenu> {
           ),
           const SizedBox(height: 10),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Spacer(),
+              Row(
+                children: [
+                  FilledButton.tonal(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmationDialog(
+                          description:
+                              '¿Estás seguro de que quieres finalizar el arqueo?',
+                          onAccept: () {
+                            widget.onCloseDayCashCount();
+                          },
+                        ),
+                      );
+                    },
+                    child: const Icon(Icons.save),
+                  ),
+                  const SizedBox(width: 5),
+                  FilledButton.tonal(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmationDialog(
+                          description:
+                              '¿Estás seguro de que quieres limpiar la lista?',
+                          onAccept: () {
+                            context.read<CashListProvider>().cleanCashList();
+                          },
+                        ),
+                      );
+                    },
+                    child: const Icon(Icons.restore_outlined),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 10),
               FilledButton.tonal(
                 onPressed: addNewCash,
                 child: const Text('Agregar'),
