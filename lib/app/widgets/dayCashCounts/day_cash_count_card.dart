@@ -3,6 +3,7 @@ import 'package:arqueo_ahsc/app/pages/close_day_cash_count_page.dart';
 import 'package:arqueo_ahsc/app/pages/details_page.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/dayCashCounts/edit_initial_amount_modal.dart';
+import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -126,27 +127,13 @@ class _DeleteCashCountButton extends StatelessWidget {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Eliminar arqueo'),
-            content: const Text('¿Está seguro que desea eliminar este arqueo?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancelar'),
-              ),
-              TextButton(
-                onPressed: () {
-                  context
-                      .read<DayCashCountsProvider>()
-                      .deleteDayCashCount(dayCashCount.id);
-
-                  Navigator.pop(context);
-                },
-                child: const Text('Eliminar'),
-              ),
-            ],
+          builder: (context) => ConfirmationDialog(
+            onAccept: () {
+              context
+                  .read<DayCashCountsProvider>()
+                  .deleteDayCashCount(dayCashCount.id);
+            },
+            description: '¿Estás seguro de que quieres eliminar este arqueo?',
           ),
         );
       },
