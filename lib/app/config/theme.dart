@@ -46,6 +46,10 @@ class ThemeConfig {
           ),
         ),
 
+        listTileTheme: const ListTileThemeData(
+          iconColor: secondaryColor,
+        ),
+
         // Card theme
         cardTheme: CardTheme(
           elevation: 1,
