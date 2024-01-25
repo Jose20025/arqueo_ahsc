@@ -22,143 +22,149 @@ class DayCashCountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: Card(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: 10),
-              Row(
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          child: Card(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Icon(
-                    Icons.attach_money,
-                    color: Colors.green,
-                  ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Plata en caja',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const Spacer(),
+                  const SizedBox(height: 10),
                   Row(
                     children: [
+                      const Icon(
+                        Icons.attach_money,
+                        color: Colors.green,
+                      ),
+                      const SizedBox(width: 10),
                       const Text(
-                        'Estado: ',
-                        style: TextStyle(
+                        'Plata en caja',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          const Text(
+                            'Estado: ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 2),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: !dayCashCount.isClosed
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                            child: Text(
+                              dayCashCount.isClosed ? 'Cerrado' : 'Abierto',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        'Inicio',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Text(
+                        'Fin',
+                        style: TextStyle(fontSize: 16),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        NumberFormat.currency()
+                            .format(dayCashCount.initialAmount),
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        NumberFormat.currency().format(
+                            dayCashCount.finalCashCount == null
+                                ? 0
+                                : dayCashCount.finalCashCount!.totalAmount),
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.date_range,
+                        color: Colors.blue,
+                      ),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Fecha',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      const Spacer(),
+                      Text(
+                        DateFormat.yMMMEd().format(dayCashCount.date),
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(width: 5),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: !dayCashCount.isClosed
-                              ? Colors.green
-                              : Colors.red,
-                        ),
-                        child: Text(
-                          dayCashCount.isClosed ? 'Cerrado' : 'Abierto',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Inicio',
-                    style: TextStyle(fontSize: 16),
+                  const SizedBox(height: 15),
+                  _DetailsButton(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(dayCashCount),
+                        ),
+                      );
+                    },
                   ),
-                  Text(
-                    'Fin',
-                    style: TextStyle(fontSize: 16),
-                  )
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    NumberFormat.currency().format(dayCashCount.initialAmount),
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    NumberFormat.currency().format(
-                        dayCashCount.finalCashCount == null
-                            ? 0
-                            : dayCashCount.finalCashCount!.totalAmount),
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.date_range,
-                    color: Colors.blue,
-                  ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    'Fecha',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const Spacer(),
-                  Text(
-                    DateFormat.yMMMEd().format(dayCashCount.date),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              _DetailsButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => DetailsPage(dayCashCount),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
+                  const SizedBox(height: 5),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _DeleteCashCountButton(dayCashCount),
-                      const SizedBox(width: 5),
-                      _EditCashCountButton(dayCashCount),
+                      Row(
+                        children: [
+                          _DeleteCashCountButton(dayCashCount),
+                          const SizedBox(width: 5),
+                          _EditCashCountButton(dayCashCount),
+                        ],
+                      ),
+                      _CloseCashCountButton(dayCashCount),
                     ],
                   ),
-                  _CloseCashCountButton(dayCashCount),
+                  const SizedBox(height: 5),
                 ],
               ),
-              const SizedBox(height: 5),
-            ],
+            ),
           ),
         ),
-      ),
+        const Divider(),
+      ],
     );
   }
 }
