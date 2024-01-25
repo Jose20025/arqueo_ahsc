@@ -249,13 +249,13 @@ class _CloseCashCountButton extends StatelessWidget {
 }
 
 class _DetailsButton extends StatelessWidget {
-  _DetailsButton({required this.onPressed});
+  const _DetailsButton({required this.onPressed});
 
   final void Function() onPressed;
 
-  final buttonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all(Colors.blue),
-  );
+  final buttonStyle = const ButtonStyle(
+      // backgroundColor: MaterialStateProperty.all(Colors.blue),
+      );
 
   @override
   Widget build(BuildContext context) {
