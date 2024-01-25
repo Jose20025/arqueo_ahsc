@@ -1,7 +1,11 @@
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
+import 'package:arqueo_ahsc/app/models/expense.dart';
+import 'package:arqueo_ahsc/app/models/income.dart';
 import 'package:arqueo_ahsc/app/pages/close_day_cash_count_page.dart';
 import 'package:arqueo_ahsc/app/pages/details_page.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
+import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
+import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/dayCashCounts/edit_initial_amount_modal.dart';
 import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +31,27 @@ class DayCashCountCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              ListTile(
-                leading: const Icon(Icons.attach_money),
-                title: const Text('Plata en caja'),
-                trailing: dayCashCount.isClosed
-                    ? const Icon(Icons.lock, color: Colors.red)
-                    : const Icon(Icons.lock_open, color: Colors.green),
+              // ListTile(
+              //   leading: const Icon(Icons.attach_money),
+              //   title: const Text('Plata en caja'),
+              //   trailing: _DeleteCashCountButton(dayCashCount),
+              // ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.attach_money,
+                    color: Colors.green,
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Plata en caja',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const Spacer(),
+                  _DeleteCashCountButton(dayCashCount),
+                ],
               ),
+              const SizedBox(height: 5),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -66,16 +84,29 @@ class DayCashCountCard extends StatelessWidget {
                   ),
                 ],
               ),
-              ListTile(
-                leading: const Icon(Icons.date_range),
-                title: const Text('Fecha'),
-                subtitle: Text(
-                  DateFormat.yMEd().format(dayCashCount.date),
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.w600),
-                ),
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.date_range,
+                    color: Colors.blue,
+                  ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Fecha',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const Spacer(),
+                  Text(
+                    DateFormat.yMMMEd().format(dayCashCount.date),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 15),
               _DetailsButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -87,16 +118,10 @@ class DayCashCountCard extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Row(
-                    children: [
-                      _EditCashCountButton(dayCashCount),
-                      const SizedBox(width: 10),
-                      _CloseCashCountButton(dayCashCount),
-                    ],
-                  ),
-                  _DeleteCashCountButton(dayCashCount)
+                  _EditCashCountButton(dayCashCount),
+                  _CloseCashCountButton(dayCashCount),
                 ],
               ),
               const SizedBox(height: 5),
@@ -116,7 +141,6 @@ class _DeleteCashCountButton extends StatelessWidget {
   final DayCashCount dayCashCount;
 
   final buttonStyle = const ButtonStyle(
-      // foregroundColor: MaterialStateProperty.all(Colors.white),
       // backgroundColor: MaterialStateProperty.all(Colors.red),
       );
 
@@ -151,77 +175,107 @@ class _EditCashCountButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Editar arqueo'),
-                content: const Text('¿Qué arqueo quieres editar?'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      showEditInitialAmountModal(context, dayCashCount);
-                    },
-                    child: const Text('Arqueo inicial'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
+    return FilledButton.icon(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Editar arqueo'),
+              content: const Text('¿Qué arqueo quieres editar?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    showEditInitialAmountModal(context, dayCashCount);
+                  },
+                  child: const Text('Arqueo inicial'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
 
-                      if (dayCashCount.finalCashCount == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'No se puede editar el arqueo final porque no se ha realizado',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            duration: Duration(seconds: 2),
-                            showCloseIcon: true,
-                            closeIconColor: Colors.white,
-                            backgroundColor: Colors.red,
+                    if (dayCashCount.finalCashCount == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'No se puede editar el arqueo final porque no se ha realizado',
+                            style: TextStyle(color: Colors.white),
                           ),
-                        );
-                        return;
-                      }
-
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => CloseDayCashCountPage(
-                            isEdit: true,
-                            dayCashCount: dayCashCount,
-                          ),
+                          duration: Duration(seconds: 2),
+                          showCloseIcon: true,
+                          closeIconColor: Colors.white,
+                          backgroundColor: Colors.red,
                         ),
                       );
-                    },
-                    child: const Text('Arqueo Final'),
-                  )
-                ],
-              );
-            },
-          );
-        },
-        child: const Text('Editar'));
+                      return;
+                    }
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => CloseDayCashCountPage(
+                          isEdit: true,
+                          dayCashCount: dayCashCount,
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text('Arqueo Final'),
+                )
+              ],
+            );
+          },
+        );
+      },
+      label: const Text('Editar'),
+      icon: const Icon(Icons.edit),
+    );
   }
 }
 
 class _CloseCashCountButton extends StatelessWidget {
-  _CloseCashCountButton(
+  const _CloseCashCountButton(
     this.dayCashCount,
   );
 
   final DayCashCount dayCashCount;
 
-  final buttonStyle = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all(Colors.green),
-  );
+  final buttonStyle = const ButtonStyle(
+      // backgroundColor: MaterialStateProperty.all(Colors.lightGreen),
+      // surfaceTintColor: MaterialStatePropertyAll(Colors.blue),
+      );
 
   @override
   Widget build(BuildContext context) {
     return dayCashCount.isClosed
-        ? const SizedBox.shrink()
-        : FilledButton.tonal(
+        ? FilledButton.icon(
+            onPressed: () {
+              final List<Income> incomes =
+                  context.read<IncomesProvider>().incomes;
+              final List<Expense> expenses =
+                  context.read<ExpensesProvider>().expenses;
+
+              context
+                  .read<DayCashCountsProvider>()
+                  .recalculateExpectedAmountAndDifference(
+                      dayCashCount.id, incomes, expenses);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    'Se ha recalculado el arqueo',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  duration: Duration(seconds: 2),
+                  showCloseIcon: true,
+                  closeIconColor: Colors.white,
+                  backgroundColor: Colors.green,
+                ),
+              );
+            },
+            icon: const Icon(Icons.restore),
+            label: const Text('Recalcular'),
+          )
+        : FilledButton.icon(
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -230,7 +284,8 @@ class _CloseCashCountButton extends StatelessWidget {
               );
             },
             style: buttonStyle,
-            child: const Text('Cerrar arqueo'),
+            label: const Text('Cerrar arqueo'),
+            icon: const Icon(Icons.no_encryption_gmailerrorred_outlined),
           );
   }
 }

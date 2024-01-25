@@ -66,13 +66,17 @@ class _ExpensesPageState extends State<ExpensesPage> {
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          bool canScroll = context.read<ExpensesProvider>().expenses.isNotEmpty;
+
           await showAddExpenseModal(context);
 
-          _scrollController.animateTo(
-            _scrollController.position.maxScrollExtent,
-            duration: const Duration(seconds: 1),
-            curve: Curves.easeIn,
-          );
+          if (canScroll) {
+            _scrollController.animateTo(
+              _scrollController.position.maxScrollExtent,
+              duration: const Duration(seconds: 1),
+              curve: Curves.easeIn,
+            );
+          }
         },
         backgroundColor: Colors.red,
         child: const Icon(Icons.add),

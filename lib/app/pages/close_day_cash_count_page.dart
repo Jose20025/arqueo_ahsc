@@ -3,8 +3,12 @@ import 'package:arqueo_ahsc/app/helpers/calculate_amounts_map.dart';
 import 'package:arqueo_ahsc/app/models/cash.dart';
 import 'package:arqueo_ahsc/app/models/cash_count.dart';
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
+import 'package:arqueo_ahsc/app/models/expense.dart';
+import 'package:arqueo_ahsc/app/models/income.dart';
 import 'package:arqueo_ahsc/app/providers/cash_list_provider.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
+import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
+import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/cash/cash_list.dart';
 import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +71,12 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
         dayCashCountsProvider.dayCashCounts.first.id,
         closedCashCount,
       );
+
+      final List<Income> incomes = context.read<IncomesProvider>().incomes;
+      final List<Expense> expenses = context.read<ExpensesProvider>().expenses;
+
+      dayCashCountsProvider.recalculateExpectedAmountAndDifference(
+          dayCashCountsProvider.dayCashCounts.first.id, incomes, expenses);
     } else {
       dayCashCountsProvider.updateDayCashCountFinalCashCount(
           widget.dayCashCount!.id, closedCashCount);
@@ -98,9 +108,12 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
             const SizedBox(height: 10),
             _BottomMenu(
               onNewCashAdded: (Cash cash) {
+                bool canScroll =
+                    context.read<CashListProvider>().cashList.isNotEmpty;
+
                 cashListProvider.addNewCash(cash);
 
-                if (context.read<CashListProvider>().cashList.isNotEmpty) {
+                if (canScroll) {
                   // Hago scroll hasta el final
                   _scrollController.animateTo(
                     _scrollController.position.maxScrollExtent,

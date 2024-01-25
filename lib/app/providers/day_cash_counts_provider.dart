@@ -96,14 +96,23 @@ class DayCashCountsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateDayCashCountFinalCashCount(
-    String id,
-    CashCount finalCashCount,
-  ) {
+  void updateDayCashCountFinalCashCount(String id, CashCount finalCashCount) {
     final DayCashCount dayCashCount =
         _dayCashCounts.firstWhere((dayCashCount) => dayCashCount.id == id);
 
     dayCashCount.finalCashCount = finalCashCount;
+
+    saveDayCashCounts();
+
+    notifyListeners();
+  }
+
+  void recalculateExpectedAmountAndDifference(
+      String id, List<Income> incomes, List<Expense> expenses) {
+    final DayCashCount dayCashCount =
+        _dayCashCounts.firstWhere((dayCashCount) => dayCashCount.id == id);
+
+    dayCashCount.calculateExpectedAmount(incomes, expenses);
 
     saveDayCashCounts();
 

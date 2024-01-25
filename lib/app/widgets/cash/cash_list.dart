@@ -68,12 +68,13 @@ class _CashCard extends StatelessWidget {
             child: const Text('Cancelar'),
           ),
           TextButton(
-              onPressed: () {
-                onDelete(cash.id);
+            onPressed: () {
+              onDelete(cash.id);
 
-                Navigator.pop(context);
-              },
-              child: const Text('Eliminar'))
+              Navigator.pop(context);
+            },
+            child: const Text('Eliminar'),
+          )
         ],
       ),
     );
@@ -87,7 +88,6 @@ class _CashCard extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.delete,
-            color: Colors.red,
             size: 20,
           ),
           onPressed: () => deleteCash(context),
