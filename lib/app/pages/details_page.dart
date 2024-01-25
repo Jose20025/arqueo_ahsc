@@ -95,7 +95,7 @@ class _DetailsSummary extends StatelessWidget {
               color: Colors.green,
             ),
             title: const Text(
-              'Monto Inicial',
+              'Monto Inicial en Caja',
               style: TextStyle(fontSize: 15),
             ),
             trailing: Text(
@@ -103,35 +103,6 @@ class _DetailsSummary extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
             ),
           ),
-
-          // Monto Final
-          dayCashCount.isClosed
-              ? ListTile(
-                  leading: const Icon(
-                    Icons.attach_money,
-                    color: Colors.green,
-                  ),
-                  title: const Text(
-                    'Monto Final',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  trailing: Text(
-                    NumberFormat.currency()
-                        .format(dayCashCount.finalCashCount!.totalAmount),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                )
-              : const ListTile(
-                  leading: Icon(
-                    Icons.warning,
-                    color: Colors.redAccent,
-                  ),
-                  title: Text(
-                    'No se ha cerrado el arqueo',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
 
           // Lo que debería haber
           if (dayCashCount.isClosed)
@@ -151,6 +122,35 @@ class _DetailsSummary extends StatelessWidget {
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
+
+          // Monto Final
+          dayCashCount.isClosed
+              ? ListTile(
+                  leading: const Icon(
+                    Icons.attach_money,
+                    color: Colors.green,
+                  ),
+                  title: const Text(
+                    'Lo que hay',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                  trailing: Text(
+                    NumberFormat.currency()
+                        .format(dayCashCount.finalCashCount!.totalAmount),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                )
+              : const ListTile(
+                  leading: Icon(
+                    Icons.warning,
+                    color: Colors.redAccent,
+                  ),
+                  title: Text(
+                    'No se ha cerrado el arqueo',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
 
           // Diferencia
           if (dayCashCount.isClosed)

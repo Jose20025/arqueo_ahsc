@@ -107,6 +107,22 @@ class OperationsSummary extends StatelessWidget {
                   ),
                 ),
               ),
+              ListTile(
+                leading: const Icon(
+                  Icons.attach_money,
+                  color: Colors.green,
+                ),
+                title: const Text('Lo que hay en caja'),
+                trailing: Text(
+                  NumberFormat.currency()
+                      .format(dayCashCount.finalCashCount!.totalAmount),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.green,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

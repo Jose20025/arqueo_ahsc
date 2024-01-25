@@ -3,8 +3,12 @@ import 'package:arqueo_ahsc/app/helpers/calculate_amounts_map.dart';
 import 'package:arqueo_ahsc/app/models/cash.dart';
 import 'package:arqueo_ahsc/app/models/cash_count.dart';
 import 'package:arqueo_ahsc/app/models/day_cash_count.dart';
+import 'package:arqueo_ahsc/app/models/expense.dart';
+import 'package:arqueo_ahsc/app/models/income.dart';
 import 'package:arqueo_ahsc/app/providers/cash_list_provider.dart';
 import 'package:arqueo_ahsc/app/providers/day_cash_counts_provider.dart';
+import 'package:arqueo_ahsc/app/providers/expenses_provider.dart';
+import 'package:arqueo_ahsc/app/providers/incomes_provider.dart';
 import 'package:arqueo_ahsc/app/widgets/cash/cash_list.dart';
 import 'package:arqueo_ahsc/app/widgets/public/confirmation_dialog.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +34,7 @@ class CloseDayCashCountPage extends StatefulWidget {
 class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
   late CashListProvider cashListProvider;
   late final DayCashCountsProvider dayCashCountsProvider;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -66,6 +71,12 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
         dayCashCountsProvider.dayCashCounts.first.id,
         closedCashCount,
       );
+
+      final List<Income> incomes = context.read<IncomesProvider>().incomes;
+      final List<Expense> expenses = context.read<ExpensesProvider>().expenses;
+
+      dayCashCountsProvider.recalculateExpectedAmountAndDifference(
+          dayCashCountsProvider.dayCashCounts.first.id, incomes, expenses);
     } else {
       dayCashCountsProvider.updateDayCashCountFinalCashCount(
           widget.dayCashCount!.id, closedCashCount);
@@ -76,8 +87,6 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Cash> cashList = context.watch<CashListProvider>().cashList;
-
     return Scaffold(
       // AppBar
       appBar: AppBar(
@@ -91,7 +100,7 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
         child: Column(
           children: [
             CashList(
-              cashList,
+              scrollController: _scrollController,
               onDelete: (String id) {
                 cashListProvider.removeCash(id);
               },
@@ -99,7 +108,19 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
             const SizedBox(height: 10),
             _BottomMenu(
               onNewCashAdded: (Cash cash) {
+                bool canScroll =
+                    context.read<CashListProvider>().cashList.isNotEmpty;
+
                 cashListProvider.addNewCash(cash);
+
+                if (canScroll) {
+                  // Hago scroll hasta el final
+                  _scrollController.animateTo(
+                    _scrollController.position.maxScrollExtent,
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeOut,
+                  );
+                }
               },
               onCloseDayCashCount: closeDayCashCount,
             )

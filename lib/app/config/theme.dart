@@ -14,7 +14,7 @@ class ThemeConfig {
         // Scaffold background color
         scaffoldBackgroundColor: backgroundColor,
 
-        // Appbar Theme
+        // App Bar Theme
         appBarTheme: const AppBarTheme(
           backgroundColor: backgroundColor,
           elevation: 0,
@@ -46,11 +46,15 @@ class ThemeConfig {
           ),
         ),
 
+        listTileTheme: const ListTileThemeData(
+          iconColor: secondaryColor,
+        ),
+
         // Card theme
         cardTheme: CardTheme(
-          elevation: 2,
+          elevation: 1,
           shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.black.withOpacity(0.4), width: 1),
+            side: BorderSide(color: Colors.grey.withOpacity(0.5), width: 0.5),
             borderRadius: BorderRadius.circular(20),
           ),
         ),

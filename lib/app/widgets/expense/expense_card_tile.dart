@@ -25,7 +25,10 @@ class ExpenseCardTile extends StatelessWidget {
           ),
           subtitle: Text(expense.description),
           trailing: IconButton(
-            icon: const Icon(Icons.delete),
+            icon: const Icon(
+              Icons.delete,
+              color: Colors.red,
+            ),
             onPressed: () {
               showDialog(
                 context: context,
