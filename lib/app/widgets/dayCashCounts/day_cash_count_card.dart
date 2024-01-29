@@ -27,8 +27,16 @@ class DayCashCountCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(10),
           child: Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: const BorderSide(
+                color: Colors.green,
+                width: 2,
+              ),
+            ),
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,7 +51,10 @@ class DayCashCountCard extends StatelessWidget {
                       const SizedBox(width: 10),
                       const Text(
                         'Plata en caja',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const Spacer(),
                       Row(
@@ -66,7 +77,7 @@ class DayCashCountCard extends StatelessWidget {
                                   : Colors.red,
                             ),
                             child: Text(
-                              dayCashCount.isClosed ? 'Cerrado' : 'Abierto',
+                              dayCashCount.isClosed ? 'Cerrado' : 'Sin cerrar',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -78,36 +89,38 @@ class DayCashCountCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'Inicio',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        'Fin',
-                        style: TextStyle(fontSize: 16),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
-                        NumberFormat.currency()
-                            .format(dayCashCount.initialAmount),
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                      const Icon(
+                        Icons.attach_money,
+                        color: Colors.green,
                       ),
-                      Text(
-                        NumberFormat.currency().format(
-                            dayCashCount.finalCashCount == null
-                                ? 0
-                                : dayCashCount.finalCashCount!.totalAmount),
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Monto inicial',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.green,
+                        ),
+                        child: Text(
+                          NumberFormat.currency().format(
+                            dayCashCount.initialAmount,
+                          ),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -121,14 +134,26 @@ class DayCashCountCard extends StatelessWidget {
                       const SizedBox(width: 10),
                       const Text(
                         'Fecha',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const Spacer(),
-                      Text(
-                        DateFormat.yMMMEd().format(dayCashCount.date),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.blue,
+                        ),
+                        child: Text(
+                          DateFormat.yMMMEd().format(dayCashCount.date),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],

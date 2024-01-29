@@ -15,7 +15,10 @@ class IncomeCardTile extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(color: Colors.grey, width: 1),
+        side: const BorderSide(
+          color: Colors.blue,
+          width: 2,
+        ),
       ),
       surfaceTintColor: Colors.blue,
       child: ListTile(
