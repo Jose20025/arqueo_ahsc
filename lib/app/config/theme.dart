@@ -46,8 +46,10 @@ class ThemeConfig {
           ),
         ),
 
+        // List Tile
         listTileTheme: const ListTileThemeData(
           iconColor: secondaryColor,
+          contentPadding: EdgeInsets.all(0),
         ),
 
         // Card theme
