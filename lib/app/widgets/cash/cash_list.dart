@@ -83,19 +83,38 @@ class _CashCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ListTile(
-        title: Text(cash.name),
-        leading: IconButton(
-          icon: const Icon(
-            Icons.delete,
-            size: 20,
-          ),
-          onPressed: () => deleteCash(context),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+        side: const BorderSide(
+          color: Colors.green,
+          width: 1,
         ),
-        subtitle: Text('Cantidad: ${cash.amount}'),
-        trailing: Text(
-          NumberFormat.currency().format(cash.total),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20),
+        child: ListTile(
+          title: Text(
+            cash.name,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          leading: IconButton(
+            icon: const Icon(
+              Icons.delete,
+              size: 20,
+            ),
+            onPressed: () => deleteCash(context),
+          ),
+          subtitle: cash.name != 'Monto bruto'
+              ? Text('Cantidad: ${cash.amount}')
+              : null,
+          trailing: Text(
+            NumberFormat.currency().format(cash.total),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          ),
         ),
       ),
     );

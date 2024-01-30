@@ -114,10 +114,9 @@ class _CloseDayCashCountPageState extends State<CloseDayCashCountPage> {
                 cashListProvider.addNewCash(cash);
 
                 if (canScroll) {
-                  // Hago scroll hasta el final
                   _scrollController.animateTo(
                     _scrollController.position.maxScrollExtent,
-                    duration: const Duration(seconds: 1),
+                    duration: const Duration(milliseconds: 500),
                     curve: Curves.easeOut,
                   );
                 }
@@ -303,7 +302,7 @@ class _BottomMenuState extends State<_BottomMenu> {
                     child: const Icon(Icons.save),
                   ),
                   const SizedBox(width: 5),
-                  FilledButton.tonal(
+                  FilledButton.tonalIcon(
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -316,7 +315,8 @@ class _BottomMenuState extends State<_BottomMenu> {
                         ),
                       );
                     },
-                    child: const Icon(Icons.restore_outlined),
+                    icon: const Icon(Icons.replay_outlined),
+                    label: const Text('Limpiar lista'),
                   ),
                 ],
               ),

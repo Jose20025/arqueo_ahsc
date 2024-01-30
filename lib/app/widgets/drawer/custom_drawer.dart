@@ -36,6 +36,7 @@ class CustomDrawer extends StatelessWidget {
                 title: 'Ingresos',
                 icon: Icons.wallet,
                 activePage: page,
+                iconColor: Colors.blue,
                 pageToCompare: ActivePage.incomes,
                 onPressed: () {
                   if (page == ActivePage.incomes) return;
@@ -49,6 +50,7 @@ class CustomDrawer extends StatelessWidget {
                 icon: Icons.account_balance_wallet_outlined,
                 activePage: page,
                 pageToCompare: ActivePage.expenses,
+                iconColor: Colors.red,
                 onPressed: () {
                   if (page == ActivePage.expenses) return;
 
@@ -70,6 +72,7 @@ class _CustomDrawerNavButton extends StatelessWidget {
     required this.activePage,
     required this.pageToCompare,
     required this.onPressed,
+    this.iconColor,
   });
 
   final ActivePage activePage;
@@ -77,21 +80,60 @@ class _CustomDrawerNavButton extends StatelessWidget {
   final void Function() onPressed;
   final String title;
   final IconData icon;
+  final Color? iconColor;
+
+  Color _buildBackgroundColor() {
+    Color color;
+
+    switch (activePage) {
+      case ActivePage.home:
+        color = ThemeConfig.secondaryColor.withOpacity(0.3);
+        break;
+      case ActivePage.incomes:
+        color = Colors.blue.withOpacity(0.3);
+        break;
+      case ActivePage.expenses:
+        color = Colors.red.withOpacity(0.3);
+        break;
+    }
+
+    if (activePage == pageToCompare) {
+      return color;
+    }
+
+    return Colors.transparent;
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-          activePage == pageToCompare
-              ? ThemeConfig.secondaryColor.withOpacity(0.3)
-              : Colors.transparent,
+        backgroundColor:
+            MaterialStateProperty.all<Color>(_buildBackgroundColor()),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
         ),
       ),
       child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
+        leading: Icon(icon, color: iconColor),
+        title: Text(
+          title,
+          style: TextStyle(
+              color: activePage == pageToCompare ? Colors.white : Colors.black,
+              fontWeight: activePage == pageToCompare
+                  ? FontWeight.bold
+                  : FontWeight.normal,
+              shadows: [
+                Shadow(
+                  color: _buildBackgroundColor(),
+                  // offset: const Offset(0, 1),
+                  blurRadius: 3,
+                )
+              ]),
+        ),
       ),
     );
   }
