@@ -9,7 +9,7 @@ class ThemeConfig {
   static ThemeData getTheme() => ThemeData(
         brightness: Brightness.light,
         colorSchemeSeed: primaryColor,
-        fontFamily: GoogleFonts.poppins().fontFamily,
+        fontFamily: GoogleFonts.lato().fontFamily,
 
         // Scaffold background color
         scaffoldBackgroundColor: backgroundColor,
@@ -46,8 +46,10 @@ class ThemeConfig {
           ),
         ),
 
+        // List Tile
         listTileTheme: const ListTileThemeData(
           iconColor: secondaryColor,
+          contentPadding: EdgeInsets.all(0),
         ),
 
         // Card theme

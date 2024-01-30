@@ -25,7 +25,7 @@ class CleanListButton extends StatelessWidget {
           ),
         ),
       ),
-      icon: const Icon(Icons.refresh),
+      icon: const Icon(Icons.replay),
     );
   }
 }

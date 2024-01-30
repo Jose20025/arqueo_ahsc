@@ -53,132 +53,179 @@ class _DetailsSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      shadowColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: const BorderSide(
+          color: Colors.blue,
+          width: 1,
+        ),
+      ),
       surfaceTintColor: Colors.blue,
-      child: Column(
-        children: [
-          // Fecha
-          ListTile(
-            leading: const Icon(
-              Icons.calendar_today,
-              color: Colors.blue,
-            ),
-            title: const Text(
-              'Fecha',
-              style: TextStyle(fontSize: 15),
-            ),
-            trailing: Text(
-              DateFormat.yMMMMEEEEd().format(dayCashCount.date),
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-          ),
-
-          // Estado
-          ListTile(
-            leading: const Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ),
-            title: const Text(
-              'Estado',
-              style: TextStyle(fontSize: 15),
-            ),
-            trailing: Text(
-              dayCashCount.isClosed ? 'Cerrado' : 'Sin cerrar',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-          ),
-
-          // Monto Inicial
-          ListTile(
-            leading: const Icon(
-              Icons.attach_money,
-              color: Colors.green,
-            ),
-            title: const Text(
-              'Monto Inicial en Caja',
-              style: TextStyle(fontSize: 15),
-            ),
-            trailing: Text(
-              NumberFormat.currency().format(dayCashCount.initialAmount),
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-            ),
-          ),
-
-          // Lo que debería haber
-          if (dayCashCount.isClosed)
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        child: Column(
+          children: [
+            // Fecha
             ListTile(
               leading: const Icon(
-                Icons.question_mark_rounded,
+                Icons.calendar_today,
                 color: Colors.blue,
-                size: 20,
               ),
               title: const Text(
-                'Lo que debería haber',
-                style: TextStyle(fontSize: 15),
+                'Fecha',
+                style: TextStyle(fontSize: 16),
               ),
               trailing: Text(
-                NumberFormat.currency().format(dayCashCount.expectedAmount),
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                DateFormat.yMMMMEEEEd().format(dayCashCount.date),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.blue,
+                ),
               ),
             ),
 
-          // Monto Final
-          dayCashCount.isClosed
-              ? ListTile(
-                  leading: const Icon(
-                    Icons.attach_money,
-                    color: Colors.green,
-                  ),
-                  title: const Text(
-                    'Lo que hay',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  trailing: Text(
-                    NumberFormat.currency()
-                        .format(dayCashCount.finalCashCount!.totalAmount),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                )
-              : const ListTile(
-                  leading: Icon(
-                    Icons.warning,
-                    color: Colors.redAccent,
-                  ),
-                  title: Text(
-                    'No se ha cerrado el arqueo',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
-
-          // Diferencia
-          if (dayCashCount.isClosed)
+            // Estado
             ListTile(
               leading: const Icon(
-                Icons.compare_arrows_rounded,
-                color: Colors.blue,
-                size: 20,
+                Icons.check_circle,
+                color: Colors.green,
               ),
               title: const Text(
-                'Diferencia',
-                style: TextStyle(fontSize: 15),
+                'Estado',
+                style: TextStyle(fontSize: 16),
               ),
-              trailing: dayCashCount.difference != 0
-                  ? Text(
-                      NumberFormat.currency().format(dayCashCount.difference),
+              trailing: Text(
+                dayCashCount.isClosed ? 'Cerrado' : 'Sin cerrar',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: dayCashCount.isClosed ? Colors.red : Colors.green,
+                ),
+              ),
+            ),
+
+            // Monto Inicial
+            ListTile(
+              leading: const Icon(
+                Icons.attach_money,
+                color: Colors.green,
+              ),
+              title: const Text(
+                'Caja Inicial',
+                style: TextStyle(fontSize: 16),
+              ),
+              trailing: Text(
+                NumberFormat.currency().format(dayCashCount.initialAmount),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.green,
+                ),
+              ),
+            ),
+
+            // Lo que debería haber
+            if (dayCashCount.isClosed)
+              ListTile(
+                leading: const Icon(
+                  Icons.question_mark_rounded,
+                  color: Colors.blue,
+                  size: 20,
+                ),
+                title: const Text(
+                  'Lo que debería haber',
+                  style: TextStyle(fontSize: 16),
+                ),
+                trailing: Text(
+                  NumberFormat.currency().format(dayCashCount.expectedAmount),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+
+            // Monto Final
+            dayCashCount.isClosed
+                ? ListTile(
+                    leading: const Icon(
+                      Icons.attach_money,
+                      color: Colors.green,
+                    ),
+                    title: const Text(
+                      'Lo que hay',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    trailing: Text(
+                      NumberFormat.currency()
+                          .format(dayCashCount.finalCashCount!.totalAmount),
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15),
-                    )
-                  : const Text(
-                      '😎 Cuadró la caja',
-                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 16,
+                        color: Colors.green,
                       ),
                     ),
-            ),
-        ],
+                  )
+                : const ListTile(
+                    leading: Icon(
+                      Icons.warning,
+                      color: Colors.redAccent,
+                    ),
+                    title: Text(
+                      'No se ha cerrado el arqueo',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+
+            // Diferencia
+            if (dayCashCount.isClosed)
+              ListTile(
+                leading: Icon(
+                  Icons.compare_arrows_rounded,
+                  color:
+                      dayCashCount.isMoneyMissing ? Colors.red : Colors.green,
+                ),
+                title: const Text(
+                  'Diferencia',
+                  style: TextStyle(fontSize: 16),
+                ),
+                subtitle: dayCashCount.difference != 0
+                    ? Text(
+                        dayCashCount.isMoneyMissing
+                            ? 'Faltó plata'
+                            : "Sobró plata",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: dayCashCount.isMoneyMissing
+                              ? Colors.red
+                              : Colors.green,
+                        ),
+                      )
+                    : null,
+                trailing: dayCashCount.difference != 0
+                    ? Text(
+                        NumberFormat.currency().format(dayCashCount.difference),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: dayCashCount.isMoneyMissing
+                              ? Colors.red
+                              : Colors.green,
+                        ),
+                      )
+                    : const Text(
+                        '😎 Cuadró la caja',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+              ),
+          ],
+        ),
       ),
     );
   }
