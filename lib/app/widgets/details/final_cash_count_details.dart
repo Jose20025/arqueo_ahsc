@@ -9,7 +9,8 @@ class FinalCashCountDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle style = const TextStyle(fontSize: 16);
+    TextStyle style =
+        const TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +28,7 @@ class FinalCashCountDetails extends StatelessWidget {
               width: 1,
             ),
           ),
-          surfaceTintColor: Colors.green,
+          surfaceTintColor: Colors.white,
           shadowColor: Colors.transparent,
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -42,7 +43,7 @@ class FinalCashCountDetails extends StatelessWidget {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Cantidad',
+                      'Total',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -50,91 +51,92 @@ class FinalCashCountDetails extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text('Billetes de 200', style: style),
+                  subtitle: Text(
+                      'Cantidad: ${cashCount.cash200 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.cash200)}'),
                   trailing: Text(
-                    cashCount.cash200 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.cash200),
+                    NumberFormat.currency().format(
+                        cashCount.cash200 == 0 ? 0 : cashCount.cash200! * 200),
                     style: style,
                   ),
                 ),
                 ListTile(
                   title: Text('Billetes de 100', style: style),
+                  subtitle: Text(
+                      'Cantidad: ${cashCount.cash100 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.cash100)}'),
                   trailing: Text(
-                    cashCount.cash100 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.cash100),
+                    NumberFormat.currency().format(
+                        cashCount.cash100 == 0 ? 0 : cashCount.cash100! * 100),
                     style: style,
                   ),
                 ),
                 ListTile(
                   title: Text('Billetes de 50', style: style),
+                  subtitle: Text(
+                      'Cantidad: ${cashCount.cash50 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.cash50)}'),
                   trailing: Text(
-                    cashCount.cash50 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.cash50),
+                    NumberFormat.currency().format(
+                        cashCount.cash50 == 0 ? 0 : cashCount.cash50! * 50),
                     style: style,
                   ),
                 ),
                 ListTile(
                   title: Text('Billetes de 20', style: style),
+                  subtitle: Text(
+                      'Cantidad: ${cashCount.cash20 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.cash20)}'),
                   trailing: Text(
-                    cashCount.cash20 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.cash20),
+                    NumberFormat.currency().format(
+                        cashCount.cash20 == 0 ? 0 : cashCount.cash20! * 20),
                     style: style,
                   ),
                 ),
                 ListTile(
                   title: Text('Billetes de 10', style: style),
+                  subtitle: Text(
+                      'Cantidad: ${cashCount.cash10 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.cash10)}'),
                   trailing: Text(
-                    cashCount.cash10 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.cash10),
+                    NumberFormat.currency().format(
+                        cashCount.cash10 == 0 ? 0 : cashCount.cash10! * 10),
                     style: style,
                   ),
                 ),
                 ListTile(
                   title: Text('Monedas de 5', style: style),
+                  subtitle: Text(
+                      'Cantidad: ${cashCount.coin5 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.coin5)}'),
                   trailing: Text(
-                    cashCount.coin5 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.coin5),
+                    NumberFormat.currency().format(
+                        cashCount.coin5 == 0 ? 0 : cashCount.coin5! * 5),
                     style: style,
                   ),
                 ),
                 ListTile(
                   title: Text('Monedas de 2', style: style),
+                  subtitle: Text(
+                      'Cantidad: ${cashCount.coin2 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.coin2)}'),
                   trailing: Text(
-                    cashCount.coin2 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.coin2),
+                    NumberFormat.currency().format(
+                        cashCount.coin2 == 0 ? 0 : cashCount.coin2! * 2),
                     style: style,
                   ),
                 ),
                 ListTile(
                   title: Text('Monedas de 1', style: style),
+                  subtitle: Text(
+                      'Cantidad: ${cashCount.coin1 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.coin1)}'),
                   trailing: Text(
-                    cashCount.coin1 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.coin1),
+                    NumberFormat.currency().format(
+                        cashCount.coin1 == 0 ? 0 : cashCount.coin1! * 1),
                     style: style,
                   ),
                 ),
                 ListTile(
                   title: Text('Monedas de 0.50', style: style),
+                  subtitle: Text(
+                    'Cantidad: ${cashCount.coin05 == 0 ? '0' : NumberFormat.decimalPatternDigits().format(cashCount.coin05)}',
+                  ),
                   trailing: Text(
-                    cashCount.coin05 == 0
-                        ? '0'
-                        : NumberFormat.decimalPatternDigits()
-                            .format(cashCount.coin05),
+                    NumberFormat.currency().format(
+                        cashCount.coin05 == 0 ? 0 : cashCount.coin05! * 0.5),
                     style: style,
                   ),
                 ),
