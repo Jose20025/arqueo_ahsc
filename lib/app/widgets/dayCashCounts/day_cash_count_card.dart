@@ -27,7 +27,7 @@ class DayCashCountCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               side: const BorderSide(
                 color: Colors.green,
-                width: 2,
+                width: 1,
               ),
             ),
             child: Container(

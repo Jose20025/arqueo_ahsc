@@ -37,11 +37,11 @@ class DayCashCountMiniCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           side: const BorderSide(
             color: ThemeConfig.secondaryColor,
-            width: 2,
+            width: 1,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          padding: const EdgeInsets.all(15),
           child: Row(
             children: [
               Column(
@@ -58,13 +58,24 @@ class DayCashCountMiniCard extends StatelessWidget {
                         'Fecha:',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Text(
-                        DateFormat.yMMMEd().format(dayCashCount.date),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.blue,
+                        ),
+                        child: Text(
+                          DateFormat.yMMMEd().format(dayCashCount.date),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
@@ -79,10 +90,20 @@ class DayCashCountMiniCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Text(
-                        buildDescription(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: ThemeConfig.secondaryColor,
+                        ),
+                        child: Text(
+                          buildDescription(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
